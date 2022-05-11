@@ -1,0 +1,37 @@
+{
+    "appwrite": {
+        "label": {
+            "appwrite": "appwrite",
+            "endpoint": "API Endpoint",
+            "project": "Project ID",
+            "apikey": "API Key",
+            "config": "Client configuration",
+            "collectionId": "collection ID",
+            "name": "Name"
+        },
+        "placeholder": {
+            "collectionId": "collection id",
+            "name": "Name"
+        },
+        "tip": {
+            "config1": "<p>To obtain these fields, go to your appwrite server console and open your project settings. </p>"
+        },
+        "warn": {
+            "missing-config": "Missing appwrite configuration",
+            "missing-client": "Missing appwrite client instance",
+            "wrong-config": "Wrong appwrite configuration",
+            "incomplete-config": "Some configuration fields are empty"
+        },
+        "status": {
+            "initializing": "initializing",
+            "reading": "reading",
+            "downloading": "downloading",
+            "uploading": "uploading",
+            "failed": "failed",
+            "error": "error"
+        },
+        "error": {
+            "failed-to-read-documents": "failed read documents: __err__"
+        }
+    }
+}

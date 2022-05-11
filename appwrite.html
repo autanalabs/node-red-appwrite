@@ -1,0 +1,85 @@
+<!--
+  Copyright 2022 AutanaLabs.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<script type="text/x-red" data-template-name="list documents">
+    <div class="form-row">
+        <label for="node-input-appwriteConfig"><i class="fa fa-user"></i> <span data-i18n="appwrite.label.config"></span></label>
+        <input type="text" id="node-input-appwriteConfig">
+    </div>
+    <div class="form-row">
+        <label for="node-input-collectionId"><i class="fa fa-folder"></i> <span data-i18n="appwrite.label.collectionId"></span></label>
+        <input type="text" id="node-input-collectionId" data-i18n="[placeholder]appwrite.placeholder.collectionId">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="appwrite.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]appwrite.placeholder.name">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('list documents',{
+        category: 'Appwrite Database',
+        color:"#F02E65",
+        defaults: {
+            appwriteConfig: {type:"appwrite-config", required:true},
+            collectionId: {value:""},
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "appwrite.png",
+        align: "left",
+        label: function() {
+            return this.name ? this.name : this.collectionId ? "list " + this.collectionId : "list documents";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="appwrite-config">
+    <div class="form-row">
+        <label for="node-config-input-endpoint"><i class="fa fa-bookmark"></i> <span data-i18n="appwrite.label.endpoint"></span></label>
+        <input class="input-append-left" type="text" id="node-config-input-endpoint" style="width: 40%;" >
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-project"><i class="fa fa-bookmark"></i> <span data-i18n="appwrite.label.project"></span></label>
+        <input class="input-append-left" type="text" id="node-config-input-project" style="width: 40%;" >
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-apikey"><i class="fa fa-bookmark"></i> <span data-i18n="appwrite.label.apikey"></span></label>
+        <input class="input-append-left" type="text" id="node-config-input-apikey" style="width: 40%;" >
+    </div>
+    <div class="form-tips">
+        <span data-i18n="[html]appwrite.tip.config1"></span>
+    </div>
+</script>
+
+<script type="text/javascript">
+(function() {
+    RED.nodes.registerType('appwrite-config',{
+        category: 'config',
+        defaults: { 
+            endpoint: {type: "text", required:true},
+            project: {type: "text", required:true},
+            apikey: {type: "text", required:true},
+        },
+        
+        label: function() {
+            return this.project ? "appwrite #"+ this.project : "appwrite";
+        },
+        exportable: false,
+    });
+})();
+</script>

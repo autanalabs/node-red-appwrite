@@ -1,13 +1,13 @@
 {
-    "name": "node-red-appwrite",
+    "name": "@autanalabs/node-red-appwrite",
     "version": "0.0.8",
     "description": "A Node-RED node to wrap appwrite sdk operations",
     "dependencies": {
         "node-appwrite": "^5.1.0"
     },
     "repository": {
-        "type": "git",
-        "url": "https://github.com/autanalabs/node-red-appwrite/tree/master"
+      "type": "git",
+      "url": "git+https://github.com/autanalabs/node-red-appwrite.git#master"
     },
     "license": "Apache-2.0",
     "keywords": [
@@ -19,9 +19,13 @@
             "appwrite": "appwrite.js"
         }
     },
-    "author": {
-        "name": "Gilbert Gonzalez",
-        "email": "gb@autanalabs.com",
-        "url": "http://autanalabs.com"
+    "author": "Gilbert Gonzalez <gb@autanalabs.com> (http://autanalabs.com)",
+    "bugs": {
+      "url": "https://github.com/autanalabs/node-red-appwrite/issues"
+    },
+    "homepage": "https://github.com/autanalabs/node-red-appwrite/tree/master#readme",
+    "main": "appwrite.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
     }
 }

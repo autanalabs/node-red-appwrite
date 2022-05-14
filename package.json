@@ -1,7 +1,7 @@
 {
-    "name": "node-red-appwrite",
-    "version": "0.0.9",
-    "description": "A Node-RED node to wrap appwrite sdk operations. Note: this package will be moved to node-red-contrib-appwrite",
+    "name": "node-red-contrib-appwrite",
+    "version": "0.0.10",
+    "description": "A Node-RED node to wrap appwrite sdk operations.",
     "dependencies": {
         "node-appwrite": "^5.1.0"
     },

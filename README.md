@@ -3,6 +3,8 @@ node-red-appwrite
 
 A <a href="http://nodered.org" target="_new">Node-RED</a> node to wrap <a href="http://appwrite.io" target="_new">appwrite</a> SDK operations.
 
+Note: this package will be moved to node-red-contrib-appwrite"
+
 Install
 -------
 

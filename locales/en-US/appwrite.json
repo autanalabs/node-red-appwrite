@@ -7,7 +7,8 @@
             "apikey": "API Key",
             "config": "Client configuration",
             "collectionId": "collection ID",
-            "name": "Name"
+            "name": "Name",
+            "queries": "Queries"
         },
         "placeholder": {
             "collectionId": "collection id",

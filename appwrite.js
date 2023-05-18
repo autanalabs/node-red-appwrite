@@ -493,6 +493,84 @@ module.exports = function(RED) {
             console.error(error);
         }
     }
+
+    function AutanaDataTableDeleteTable(n) {
+        console.log('creating AutanaDataTableDeleteTableNode...')
+        try {
+            RED.nodes.createNode(this, n);
+            let databaseName = n.databaseName;
+            let nodeTableName = n.tableName;
+            let nodeSkipNotFound = n.skipNotFound;
+            let node = this;
+            let database = getDatabase();
+
+            node.on("input", function(msg) {
+                console.log('AutanaDataTableDeleteTable.onMessage()');
+    
+                let tableName = nodeTableName || msg.tableName;
+    
+                if (msg.tableName && nodeTableName 
+                    && (nodeTableName !== msg.tableName)) {  
+                    node.warn(RED._("autanaCloud.error.table-name-overrided"));
+                    console.warn(RED._("autanaCloud.error.table-name-overrided"));
+                    return;
+                }
+
+                let skipNotFound = nodeSkipNotFound || msg.nodeSkipNotFound || false;
+
+                if (msg.skipNotFound && nodeSkipNotFound 
+                    && (nodeSkipNotFound !== msg.nodeSkipNotFound)) {  
+                    node.warn(RED._("autanaCloud.error.table-name-overrided"));
+                    console.warn(RED._("autanaCloud.error.table-name-overrided"));
+                    return;
+                }
+
+    
+                node.status({fill:"blue",shape:"dot",text:"autanaCloud.status.reading"});
+                let promise = database.deleteCollection(databaseName, tableName);
+                promise.then(function (response) {
+                    try {
+                        msg.payload = response;
+                        msg._autana = {
+                            'table' : tableName
+                        }
+                        node.status({});
+                        node.send(msg);
+
+                    } catch(err) {
+                        msg.payload = {};
+                        node.status({fill:"red",shape:"ring",text:"autanaCloud.status.error"});
+                        node.error(RED._("autanaCloud.error.failed-to-read-documents", {err:err}));
+                        console.error(RED._("autanaCloud.error.failed-to-read-documents", {err:err}));
+                    }
+                }, function (err) {
+                    msg.payload = {};
+                    if ((skipNotFound == true) && err.toString().includes("not found")) {
+                        node.status({fill:"yellow",shape:"ring",text:"autanaCloud.warn.table-exists"});
+                        msg._autana = {
+                            'table': {
+                                'name': tableName,
+                                'enabled': true,
+                                'attributes': [],
+                                'indexes': []
+                            }
+                        }
+                        node.send(msg);
+
+                    } else {
+                        node.status({fill:"red",shape:"ring",text:"autanaCloud.status.error"});
+                        node.error(RED._("autanaCloud.error.failed-to-read-documents", {err:err}));
+                        console.error(RED._("autanaCloud.error.failed-to-read-documents", {err:err}));
+                    } 
+                });
+            });
+            
+        } catch (error) {
+            node.status({fill:"red",shape:"ring",text:"autanaCloud.status.error"});
+            node.error(error);
+            console.error(error);
+        }
+    }
     
     RED.nodes.registerType("read table", AutanaDataTableReadNode);
     RED.nodes.registerType("insert row", AutanaDataTableInsertNode);
@@ -501,6 +579,7 @@ module.exports = function(RED) {
     RED.nodes.registerType("read schema", AutanaDataTableReadSchema);
     RED.nodes.registerType("list tables", AutanaDataTableListTables);
     RED.nodes.registerType("create table", AutanaDataTableCreateTable);
+    RED.nodes.registerType("delete table", AutanaDataTableDeleteTable);
    
 
     const columns = require('./lib/columns');

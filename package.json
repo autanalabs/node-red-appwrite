@@ -3,7 +3,7 @@
   "version": "0.0.11",
   "description": "Node-RED connector for appwrite",
   "dependencies": {
-    "node-appwrite": "^5.1.0"
+    "node-appwrite": "^8.1.0"
   },
   "engines": {
     "node": ">=17.0.0"
@@ -19,7 +19,7 @@
     "autana"
   ],
   "node-red": {
-    "version": ">=2.0.0",
+    "version": ">=2.2.0",
     "nodes": {
       "appwrite": "appwrite.js"
     }
@@ -31,6 +31,13 @@
   "homepage": "https://github.com/autanalabs/node-red-appwrite/tree/master#readme",
   "main": "appwrite.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "node-red": "^2.2.2",
+    "node-red-node-test-helper": "^0.3.0",
+    "should": "^13.2.3",
+    "uuid": "^8.3.2"
   }
 }

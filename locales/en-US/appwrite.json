@@ -1,38 +1,70 @@
 {
-    "appwrite": {
+    "autanaCloud": {
         "label": {
-            "appwrite": "appwrite",
-            "endpoint": "API Endpoint",
-            "project": "Project ID",
-            "apikey": "API Key",
-            "config": "Client configuration",
-            "collectionId": "collection ID",
-            "name": "Name"
+            "tableName": "Table name",
+            "name": "Name",
+            "queries": "Query",
+            "docId": "Document Id",
+            "skipExists": "Skip exists",
+            "skipNotFound": "Skip not-found",
+            "columnKey": "Key",
+            "columnRequired": "Required",
+            "columnDefaultValue": "Default",
+            "columnIsArray": "Is Array",
+            "columnStringSize": "Max Length",
+            "columnIntegerMin": "Min Value",
+            "columnIntegerMax": "Max Value",
+            "indexName": "Index name",
+            "indexType": "Type",
+            "indexColumns": "Columns",
+            "indexOrders": "Sorting"
         },
         "placeholder": {
-            "collectionId": "collection id",
-            "name": "Name"
+            "tableName": "Table name",
+            "queries": "Filter rows by...",
+            "name": "Name",
+            "docId": "a value for primary key",
+            "columnKey": "the column key",
+            "columnDefaultValue": "defaut value",
+            "columnStringSize": "the max length of text",
+            "columnIntegerMin": "the min integer value",
+            "columnIntegerMax": "the max integer value",
+            "indexName": "Index name",
+            "indexColumns": "id, name, age",
+            "indexOrders": "ASC, DESC, ASC"
         },
         "tip": {
-            "config1": "<p>To obtain these fields, go to your appwrite server console and open your project settings. </p>"
+            "config1": "<p>To obtain these fields, go to your AutanaCloud account and open your project settings. </p>"
         },
         "warn": {
-            "missing-config": "Missing appwrite configuration",
-            "missing-client": "Missing appwrite client instance",
-            "wrong-config": "Wrong appwrite configuration",
-            "incomplete-config": "Some configuration fields are empty"
+            "missing-config": "Missing AutanaCloud configuration",
+            "missing-client": "Missing AutanaCloud client instance",
+            "wrong-config": "Wrong AutanaCloud configuration",
+            "incomplete-config": "Some configuration fields are empty",
+            "table-exists": "Table already exists",
+            "column-exists": "Column already exists",
+            "index-exists": "Index already exists",
+            "column-not-found": "Column not found",
+            "index-not-found": "Index not found"
         },
         "status": {
             "initializing": "initializing",
             "reading": "reading",
+            "executing": "executing",
+            "writing": "writing",
             "downloading": "downloading",
             "uploading": "uploading",
             "failed": "failed",
             "error": "error"
         },
         "error": {
-            "failed-to-read-documents": "failed read documents: __err__",
-            "collection-id-overrided": "You can set collectionId property or msg.collectionId but not both."
+            "failed-to-read-documents": "failed read table: __err__",
+            "table-name-overrided": "You can set tableName property or msg.tableName but not both.",
+            "table-name-empty": "You must set tableName property or msg.tableName or msg._autana.table.name",
+            "query-overrided": "You can set query property or msg.query but not both.",
+            "doc-id-overrided": "You can set docId property or msg.docId but not both.",
+            "doc-id-empty": "You must set docId property or msg.docId.",
+            "column-key-empty": "You must set docId property or msg.docId."
         }
     }
 }

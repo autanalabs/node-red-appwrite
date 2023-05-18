@@ -1,90 +1,707 @@
 <!--
   Copyright 2022 AutanaLabs.
 
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
+  See LICENSE file
 
-  http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
 -->
 
-<script type="text/x-red" data-template-name="list documents">
+<script type="text/x-red" data-template-name="read table">
     <div class="form-row">
-        <label for="node-input-appwriteConfig"><i class="fa fa-user"></i> <span data-i18n="appwrite.label.config"></span></label>
-        <input type="text" id="node-input-appwriteConfig">
+        <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
+        <input type="text" id="node-input-tableName" data-i18n="[placeholder]autanaCloud.placeholder.tableName">
     </div>
-    <div class="form-row">
-        <label for="node-input-collectionId"><i class="fa fa-folder"></i> <span data-i18n="appwrite.label.collectionId"></span></label>
-        <input type="text" id="node-input-collectionId" data-i18n="[placeholder]appwrite.placeholder.collectionId">
+
+    <div class="form-row" style="margin-bottom:0;">
+        <label for="node-input-query"><i class="fa fa-filter"></i> <span data-i18n="autanaCloud.label.queries"></span></label>
+        <input type="text" id="node-input-query" data-i18n="[placeholder]autanaCloud.placeholder.queries">
     </div>
+
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="appwrite.label.name"></span></label>
-        <input type="text" id="node-input-name" data-i18n="[placeholder]appwrite.placeholder.name">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="autanaCloud.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]autanaCloud.placeholder.name">
     </div>
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('list documents',{
-        category: 'Appwrite Database',
-        color:"#F0B4C5",
+    RED.nodes.registerType('read table',{
+        category: 'AutanaCloud',
+        color:"#FFFFFF",
         defaults: {
-            appwriteConfig: {type:"appwrite-config", required:true},
-            collectionId: {value:""},
-            name: {value:""}
+            tableName: {value:""},
+            name: {value:""},
+            query: {value:""}
         },
         inputs:1,
         outputs:1,
-        icon: "appwrite.png",
+        icon: "autana.png",
         align: "left",
         label: function() {
-            return this.name ? this.name : this.collectionId ? "list " + this.collectionId : "list documents";
+            return this.name ? this.name : this.tableName ? "read " + this.tableName : "read table";
+        },
+        oneditprepare: function() {
+
         }
     });
 </script>
 
-<script type="text/x-red" data-template-name="appwrite-config">
+<script type="text/x-red" data-template-name="insert row">
     <div class="form-row">
-        <label for="node-config-input-endpoint"><i class="fa fa-bookmark"></i> <span data-i18n="appwrite.label.endpoint"></span></label>
-        <input class="input-append-left" type="text" id="node-config-input-endpoint" style="width: 40%;" >
+        <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
+        <input type="text" id="node-input-tableName" data-i18n="[placeholder]autanaCloud.placeholder.tableName">
     </div>
+
+    <div class="form-row" style="margin-bottom:0;">
+        <label for="node-input-docId"><i class="fa fa-filter"></i> <span data-i18n="autanaCloud.label.docId"></span></label>
+        <input type="text" id="node-input-docId" data-i18n="[placeholder]autanaCloud.placeholder.docId">
+    </div>
+
     <div class="form-row">
-        <label for="node-config-input-project"><i class="fa fa-bookmark"></i> <span data-i18n="appwrite.label.project"></span></label>
-        <input class="input-append-left" type="text" id="node-config-input-project" style="width: 40%;" >
-    </div>
-    <div class="form-row">
-        <label for="node-config-input-apikey"><i class="fa fa-bookmark"></i> <span data-i18n="appwrite.label.apikey"></span></label>
-        <input class="input-append-left" type="text" id="node-config-input-apikey" style="width: 40%;" >
-    </div>
-    <div class="form-tips">
-        <span data-i18n="[html]appwrite.tip.config1"></span>
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="autanaCloud.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]autanaCloud.placeholder.name">
     </div>
 </script>
 
 <script type="text/javascript">
-(function() {
-    RED.nodes.registerType('appwrite-config',{
-        category: 'config',
-        defaults: { 
-            endpoint: {type: "text", required:true},
-            project: {type: "text", required:true},
-            apikey: {type: "text", required:true},
+    RED.nodes.registerType('insert row',{
+        category: 'AutanaCloud',
+        color:"#FFFFFF",
+        defaults: {
+            tableName: {value:""},
+            name: {value:""},
+            docId: {value:""}
         },
-        
+        inputs:1,
+        outputs:1,
+        icon: "autana.png",
+        align: "left",
         label: function() {
-            var host = this.endpoint ? this.endpoint : "unknow"
-            if (this.endpoint) {
-                var p = host.indexOf("://")
-                host = host.substr(p+3).replace("/v1","");
-            }
-            return this.project ? this.project + "@" + host : "appwrite";
+            return this.name ? this.name : this.tableName ? "insert " + this.tableName : "insert row";
         },
-        exportable: false,
+        oneditprepare: function() {
+
+        }
     });
-})();
 </script>
+
+<script type="text/x-red" data-template-name="update row">
+    <div class="form-row">
+        <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
+        <input type="text" id="node-input-tableName" data-i18n="[placeholder]autanaCloud.placeholder.tableName">
+    </div>
+
+    <div class="form-row" style="margin-bottom:0;">
+        <label for="node-input-docId"><i class="fa fa-filter"></i> <span data-i18n="autanaCloud.label.docId"></span></label>
+        <input type="text" id="node-input-docId" data-i18n="[placeholder]autanaCloud.placeholder.docId">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="autanaCloud.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]autanaCloud.placeholder.name">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('update row',{
+        category: 'AutanaCloud',
+        color:"#FFFFFF",
+        defaults: {
+            tableName: {value:""},
+            name: {value:""},
+            docId: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "autana.png",
+        align: "left",
+        label: function() {
+            return this.name ? this.name : this.tableName ? "update " + this.tableName : "update row";
+        },
+        oneditprepare: function() {
+
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="delete row">
+    <div class="form-row">
+        <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
+        <input type="text" id="node-input-tableName" data-i18n="[placeholder]autanaCloud.placeholder.tableName">
+    </div>
+
+    <div class="form-row" style="margin-bottom:0;">
+        <label for="node-input-docId"><i class="fa fa-filter"></i> <span data-i18n="autanaCloud.label.docId"></span></label>
+        <input type="text" id="node-input-docId" data-i18n="[placeholder]autanaCloud.placeholder.docId">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="autanaCloud.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]autanaCloud.placeholder.name">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('delete row',{
+        category: 'AutanaCloud',
+        color:"#FFFFFF",
+        defaults: {
+            tableName: {value:""},
+            name: {value:""},
+            docId: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "autana.png",
+        align: "left",
+        label: function() {
+            return this.name ? this.name : this.tableName ? "delete " + this.tableName : "delete row";
+        },
+        oneditprepare: function() {
+
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="read schema">
+    <div class="form-row">
+        <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
+        <input type="text" id="node-input-tableName" data-i18n="[placeholder]autanaCloud.placeholder.tableName">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="autanaCloud.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]autanaCloud.placeholder.name">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('read schema',{
+        category: 'AutanaCloud',
+        color:"#FFFFFF",
+        defaults: {
+            tableName: {value:""},
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "autana.png",
+        align: "left",
+        label: function() {
+            return this.name ? this.name : this.tableName ? "schema of " + this.tableName : "read schema";
+        },
+        oneditprepare: function() {
+
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="list tables">
+    <div class="form-row">
+        <label for="node-input-tableName"><i class="fa fa-filter"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
+        <input type="text" id="node-input-tableName" data-i18n="[placeholder]autanaCloud.placeholder.tableName">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="autanaCloud.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]autanaCloud.placeholder.name">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('list tables',{
+        category: 'AutanaCloud',
+        color:"#FFFFFF",
+        defaults: {
+            tableName: {value:""},
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "autana.png",
+        align: "left",
+        label: function() {
+            return this.name ? this.name : this.tableName ? "tables like " + this.tableName : "list tables";
+        },
+        oneditprepare: function() {
+
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="create table">
+    <div class="form-row">
+        <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
+        <input type="text" id="node-input-tableName" data-i18n="[placeholder]autanaCloud.placeholder.tableName">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-skipExists"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.skipExists"></span></label>
+        <input type="checkbox" id="node-input-skipExists">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="autanaCloud.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]autanaCloud.placeholder.name">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('create table',{
+        category: 'AutanaCloud',
+        color:"#FFFFFF",
+        defaults: {
+            tableName: {value:""},
+            skipExists: {value: false},
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "autana.png",
+        align: "left",
+        label: function() {
+            return this.name ? this.name : this.tableName ? "create table " + this.tableName : "create table";
+        },
+        oneditprepare: function() {
+
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="add String Column">
+    <div class="form-row">
+        <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
+        <input type="text" id="node-input-tableName" data-i18n="[placeholder]autanaCloud.placeholder.tableName">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-key"><i class="fa fa-key"></i> <span data-i18n="autanaCloud.label.columnKey"></span></label>
+        <input type="text" id="node-input-key" data-i18n="[placeholder]autanaCloud.placeholder.columnKey">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-size"><i class="fa fa-text-width"></i> <span data-i18n="autanaCloud.label.columnStringSize"></span></label>
+        <input type="text" id="node-input-size" data-i18n="[placeholder]autanaCloud.placeholder.columnStringSize">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-required"><i class="fa fa-asterisk"></i> <span data-i18n="autanaCloud.label.columnRequired"></span></label>
+        <input type="checkbox" id="node-input-required">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-defaultValue"><i class="fa fa-font"></i> <span data-i18n="autanaCloud.label.columnDefaultValue"></span></label>
+        <input type="text" id="node-input-defaultValue" data-i18n="[placeholder]autanaCloud.placeholder.columnDefaultValue">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-isArray"><i class="fa fa-list-ol"></i> <span data-i18n="autanaCloud.label.columnIsArray"></span></label>
+        <input type="checkbox" id="node-input-isArray">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-skipExists"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.skipExists"></span></label>
+        <input type="checkbox" id="node-input-skipExists">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="autanaCloud.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]autanaCloud.placeholder.name">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('add String Column',{
+        category: 'AutanaCloud',
+        color:"#FFFFFF",
+        defaults: {
+            tableName: {value: ""},
+            key: {value: ""},
+            size: {value: 255},
+            required: {value: false},
+            defaultValue: {value: ""},
+            isArray: {value: false},
+            skipExists: {value: false},
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "autana.png",
+        align: "left",
+        label: function() {
+            return this.name ? this.name : this.key ? "string column " + this.key : "string column";
+        },
+        oneditprepare: function() {
+
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="add Integer Column">
+    <div class="form-row">
+        <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
+        <input type="text" id="node-input-tableName" data-i18n="[placeholder]autanaCloud.placeholder.tableName">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-key"><i class="fa fa-key"></i> <span data-i18n="autanaCloud.label.columnKey"></span></label>
+        <input type="text" id="node-input-key" data-i18n="[placeholder]autanaCloud.placeholder.columnKey">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-min"><i class="fa fa-text-width"></i> <span data-i18n="autanaCloud.label.columnIntegerMin"></span></label>
+        <input type="text" id="node-input-min" data-i18n="[placeholder]autanaCloud.placeholder.columnIntegerMin">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-max"><i class="fa fa-text-width"></i> <span data-i18n="autanaCloud.label.columnIntegerMax"></span></label>
+        <input type="text" id="node-input-max" data-i18n="[placeholder]autanaCloud.placeholder.columnIntegerMax">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-required"><i class="fa fa-asterisk"></i> <span data-i18n="autanaCloud.label.columnRequired"></span></label>
+        <input type="checkbox" id="node-input-required">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-defaultValue"><i class="fa fa-font"></i> <span data-i18n="autanaCloud.label.columnDefaultValue"></span></label>
+        <input type="text" id="node-input-defaultValue" data-i18n="[placeholder]autanaCloud.placeholder.columnDefaultValue">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-isArray"><i class="fa fa-list-ol"></i> <span data-i18n="autanaCloud.label.columnIsArray"></span></label>
+        <input type="checkbox" id="node-input-isArray">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-skipExists"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.skipExists"></span></label>
+        <input type="checkbox" id="node-input-skipExists">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="autanaCloud.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]autanaCloud.placeholder.name">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('add Integer Column',{
+        category: 'AutanaCloud',
+        color:"#FFFFFF",
+        defaults: {
+            tableName: {value: ""},
+            key: {value: ""},
+            min: {value: null},
+            max: {value: null},
+            required: {value: false},
+            defaultValue: {value: ""},
+            isArray: {value: false},
+            skipExists: {value: false},
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "autana.png",
+        align: "left",
+        label: function() {
+            return this.name ? this.name : this.key ? "integer column " + this.key : "integer column";
+        },
+        oneditprepare: function() {
+
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="add Float Column">
+    <div class="form-row">
+        <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
+        <input type="text" id="node-input-tableName" data-i18n="[placeholder]autanaCloud.placeholder.tableName">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-key"><i class="fa fa-key"></i> <span data-i18n="autanaCloud.label.columnKey"></span></label>
+        <input type="text" id="node-input-key" data-i18n="[placeholder]autanaCloud.placeholder.columnKey">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-min"><i class="fa fa-text-width"></i> <span data-i18n="autanaCloud.label.columnIntegerMin"></span></label>
+        <input type="text" id="node-input-min" data-i18n="[placeholder]autanaCloud.placeholder.columnIntegerMin">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-max"><i class="fa fa-text-width"></i> <span data-i18n="autanaCloud.label.columnIntegerMax"></span></label>
+        <input type="text" id="node-input-max" data-i18n="[placeholder]autanaCloud.placeholder.columnIntegerMax">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-required"><i class="fa fa-asterisk"></i> <span data-i18n="autanaCloud.label.columnRequired"></span></label>
+        <input type="checkbox" id="node-input-required">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-defaultValue"><i class="fa fa-font"></i> <span data-i18n="autanaCloud.label.columnDefaultValue"></span></label>
+        <input type="text" id="node-input-defaultValue" data-i18n="[placeholder]autanaCloud.placeholder.columnDefaultValue">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-isArray"><i class="fa fa-list-ol"></i> <span data-i18n="autanaCloud.label.columnIsArray"></span></label>
+        <input type="checkbox" id="node-input-isArray">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-skipExists"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.skipExists"></span></label>
+        <input type="checkbox" id="node-input-skipExists">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="autanaCloud.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]autanaCloud.placeholder.name">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('add Float Column',{
+        category: 'AutanaCloud',
+        color:"#FFFFFF",
+        defaults: {
+            tableName: {value: ""},
+            key: {value: ""},
+            min: {value: null},
+            max: {value: null},
+            required: {value: false},
+            defaultValue: {value: ""},
+            isArray: {value: false},
+            skipExists: {value: false},
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "autana.png",
+        align: "left",
+        label: function() {
+            return this.name ? this.name : this.key ? "float column " + this.key : "float column";
+        },
+        oneditprepare: function() {
+
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="add Boolean Column">
+    <div class="form-row">
+        <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
+        <input type="text" id="node-input-tableName" data-i18n="[placeholder]autanaCloud.placeholder.tableName">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-key"><i class="fa fa-key"></i> <span data-i18n="autanaCloud.label.columnKey"></span></label>
+        <input type="text" id="node-input-key" data-i18n="[placeholder]autanaCloud.placeholder.columnKey">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-required"><i class="fa fa-asterisk"></i> <span data-i18n="autanaCloud.label.columnRequired"></span></label>
+        <input type="checkbox" id="node-input-required">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-defaultValue"><i class="fa fa-font"></i> <span data-i18n="autanaCloud.label.columnDefaultValue"></span></label>
+        <input type="text" id="node-input-defaultValue" data-i18n="[placeholder]autanaCloud.placeholder.columnDefaultValue">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-isArray"><i class="fa fa-list-ol"></i> <span data-i18n="autanaCloud.label.columnIsArray"></span></label>
+        <input type="checkbox" id="node-input-isArray">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-skipExists"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.skipExists"></span></label>
+        <input type="checkbox" id="node-input-skipExists">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="autanaCloud.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]autanaCloud.placeholder.name">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('add Boolean Column',{
+        category: 'AutanaCloud',
+        color:"#FFFFFF",
+        defaults: {
+            tableName: {value: ""},
+            key: {value: ""},
+            required: {value: false},
+            defaultValue: {value: ""},
+            isArray: {value: false},
+            skipExists: {value: false},
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "autana.png",
+        align: "left",
+        label: function() {
+            return this.name ? this.name : this.key ? "boolean column " + this.key : "boolean column";
+        },
+        oneditprepare: function() {
+
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="delete Column">
+    <div class="form-row">
+        <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
+        <input type="text" id="node-input-tableName" data-i18n="[placeholder]autanaCloud.placeholder.tableName">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-key"><i class="fa fa-key"></i> <span data-i18n="autanaCloud.label.columnKey"></span></label>
+        <input type="text" id="node-input-key" data-i18n="[placeholder]autanaCloud.placeholder.columnKey">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-skipNotFound"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.skipNotFound"></span></label>
+        <input type="checkbox" id="node-input-skipNotFound">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="autanaCloud.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]autanaCloud.placeholder.name">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('delete Column',{
+        category: 'AutanaCloud',
+        color:"#FFFFFF",
+        defaults: {
+            tableName: {value: ""},
+            key: {value: ""},
+            skipNotFound: {value: false}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "autana.png",
+        align: "left",
+        label: function() {
+            return this.name ? this.name : this.key ? "delete column " + this.key : "delete column";
+        },
+        oneditprepare: function() {
+
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="create Index">
+    <div class="form-row">
+        <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
+        <input type="text" id="node-input-tableName" data-i18n="[placeholder]autanaCloud.placeholder.tableName">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-indexName"><i class="fa fa-key"></i> <span data-i18n="autanaCloud.label.indexName"></span></label>
+        <input type="text" id="node-input-indexName" data-i18n="[placeholder]autanaCloud.placeholder.indexName">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-indexType"><i class="fa fa-text-width"></i> <span data-i18n="autanaCloud.label.indexType"></span></label>
+        <select id="node-input-indexType">
+            <option value="key">Key</option>
+            <option value="unique">Unique</option>
+            <option value="fulltext">Fulltext</option>
+          </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-columns"><i class="fa fa-text-width"></i> <span data-i18n="autanaCloud.label.indexColumns"></span></label>
+        <input type="text" id="node-input-columns" data-i18n="[placeholder]autanaCloud.placeholder.indexColumns">
+    </div>
+
+
+    <div class="form-row">
+        <label for="node-input-orders"><i class="fa fa-font"></i> <span data-i18n="autanaCloud.label.indexOrders"></span></label>
+        <input type="text" id="node-input-orders" data-i18n="[placeholder]autanaCloud.placeholder.indexOrders">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-skipExists"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.skipExists"></span></label>
+        <input type="checkbox" id="node-input-skipExists">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="autanaCloud.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]autanaCloud.placeholder.name">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('create Index',{
+        category: 'AutanaCloud',
+        color:"#FFFFFF",
+        defaults: {
+            tableName: {value: ""},
+            indexName: {value: ""},
+            indexType: {value: ""},
+            columns: {value: ""},
+            orders: {value: ""},
+            skipExists: {value: false},
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "autana.png",
+        align: "left",
+        label: function() {
+            return this.name ? this.name : this.indexName ? "create index " + this.indexName : "create index";
+        },
+        oneditprepare: function() {
+
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="delete Index">
+    <div class="form-row">
+        <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
+        <input type="text" id="node-input-tableName" data-i18n="[placeholder]autanaCloud.placeholder.tableName">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-indexName"><i class="fa fa-key"></i> <span data-i18n="autanaCloud.label.indexName"></span></label>
+        <input type="text" id="node-input-indexName" data-i18n="[placeholder]autanaCloud.placeholder.indexName">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-skipNotFound"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.skipNotFound"></span></label>
+        <input type="checkbox" id="node-input-skipNotFound">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="autanaCloud.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]autanaCloud.placeholder.name">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('delete Index',{
+        category: 'AutanaCloud',
+        color:"#FFFFFF",
+        defaults: {
+            tableName: {value: ""},
+            indexName: {value: ""},
+            skipNotFound: {value: false},
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "autana.png",
+        align: "left",
+        label: function() {
+            return this.name ? this.name : this.indexName ? "delete index " + this.indexName : "delete index";
+        },
+        oneditprepare: function() {
+
+        }
+    });
+</script>
+

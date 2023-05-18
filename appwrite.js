@@ -36,7 +36,7 @@ module.exports = function(RED) {
             .setProject("autana")
             .setKey("9e49d48d5914598f3d9ade48d058ee1af3e04655793bcab0dca7f0bb5ca0b707b6346d6d9ef5ec2a09de2275c95af95b908a2af3c4d3d3bf508b59ae505c6b3cd45fb5a58f5b43f243fcefded0716269da00d6ca4a6e5400fc926afc8916f4223d55ffbe8842ca3045cd4188dea301ba6c5ba88760e2e5731c274167d28e25b1");
         
-        let database = new sdk.Database(client);
+        let database = new sdk.Databases(client);
         return database;
     }
 
@@ -406,7 +406,7 @@ module.exports = function(RED) {
     }
 
     function AutanaDataTableCreateTable(n) {
-        console.log('creating AutanaDataTableReadSchemaNode...')
+        console.log('creating AutanaDataTableCreateTableNode...')
         try {
             RED.nodes.createNode(this, n);
             let databaseName = n.databaseName;
@@ -416,7 +416,7 @@ module.exports = function(RED) {
             let database = getDatabase();
 
             node.on("input", function(msg) {
-                console.log('AutanaDataTableReadSchemaNode.onMessage()');
+                console.log('AutanaDataTableCreateTable.onMessage()');
     
                 let tableName = nodeTableName || msg.tableName;
     
@@ -435,9 +435,15 @@ module.exports = function(RED) {
                     console.warn(RED._("autanaCloud.error.table-name-overrided"));
                     return;
                 }
+
+                const { Permission, Role } = require('node-appwrite');
     
                 node.status({fill:"blue",shape:"dot",text:"autanaCloud.status.reading"});
-                let promise = database.createCollection(databaseName, tableName, tableName, "collection", [], []);
+                let promise = database.createCollection(databaseName, tableName, tableName, [
+                    Permission.read(Role.any()), 
+                    Permission.update(Role.any()), 
+                    Permission.delete(Role.any()), 
+                ], false);
                 promise.then(function (response) {
                     try {
                         msg.payload = response;

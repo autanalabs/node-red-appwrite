@@ -1,6 +1,6 @@
 var should = require("should");
 var helper = require("node-red-node-test-helper");
-var autanaDataTablesNode = require("../autana-data-tables.js");
+var autanaDataTablesNode = require("../appwrite.js");
 
 helper.init(require.resolve("node-red"));
 
@@ -13,6 +13,7 @@ function getSutNode() {
         id: "add-string-column",
         type: "add String Column",
         tableName: '',
+        databaseName: '',
         key: "firstName",
         size: 255,
         required: true,
@@ -70,6 +71,9 @@ describe("testing string-column nodes", function () {
                     _autana: {
                         table: {
                             name: 'manolo5'
+                        },
+                        database: {
+                            name: 'prueba'
                         }
                     },
                     key : 'pepe'

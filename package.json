@@ -30,9 +30,15 @@
   },
   "homepage": "https://github.com/autanalabs/node-red-appwrite/tree/master#readme",
   "main": "appwrite.js",
+
+
   "scripts": {
-    "test": "mocha test/"
+    "test": "mocha test/",
+    "test1": "mocha test/boolean-column-test",
+    "test2": "mocha test/create-index-test"
   },
+
+
   "devDependencies": {
     "mocha": "^10.2.0",
     "node-red": "^2.2.2",

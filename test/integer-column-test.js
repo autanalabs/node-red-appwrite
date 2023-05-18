@@ -1,6 +1,6 @@
 var should = require("should");
 var helper = require("node-red-node-test-helper");
-var autanaDataTablesNode = require("../autana-data-tables.js");
+var autanaDataTablesNode = require("../appwrite.js");
 
 helper.init(require.resolve("node-red"));
 
@@ -13,6 +13,7 @@ function getSutNode() {
         id: "add-integer-column",
         type: "add Integer Column",
         tableName: '',
+        databaseName: '',
         key: "age",
         min: null,
         max: null,
@@ -71,6 +72,9 @@ describe("testing integer-column node", function () {
                     _autana: {
                         table: {
                             name: 'manolo5'
+                        },
+                        database: {
+                            name: 'prueba'
                         }
                     }
                 });

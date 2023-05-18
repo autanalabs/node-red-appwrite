@@ -1,6 +1,6 @@
 var should = require("should");
 var helper = require("node-red-node-test-helper");
-var autanaDataTablesNode = require("../autana-data-tables.js");
+var autanaDataTablesNode = require("../appwrite.js");
 
 helper.init(require.resolve("node-red"));
 
@@ -13,6 +13,7 @@ function getSutNode() {
         id: "add-float-column",
         type: "add Float Column",
         tableName: '',
+        databaseName: '',
         key: "rate",
         min: null,
         max: null,
@@ -63,6 +64,9 @@ describe("testing float-column node", function () {
                     _autana: {
                         table: {
                             name: 'manolo5'
+                        },
+                        database: {
+                            name: 'prueba'
                         }
                     }
                 });

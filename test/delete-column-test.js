@@ -1,6 +1,6 @@
 var should = require("should");
 var helper = require("node-red-node-test-helper");
-var autanaDataTablesNode = require("../autana-data-tables.js");
+var autanaDataTablesNode = require("../appwrite.js");
 
 helper.init(require.resolve("node-red"));
 
@@ -13,6 +13,7 @@ function getSutNode() {
         id: "delete-column",
         type: "delete Column",
         tableName: '',
+        databaseName: '',
         key: "isVip2",
         skipNotFound: true,
         wires: [["helper-node"]],
@@ -58,6 +59,9 @@ describe("testing delete-column node", function () {
                     _autana: {
                         table: {
                             name: 'manolo5'
+                        },
+                        database: {
+                            name: 'prueba'
                         }
                     }
                 });

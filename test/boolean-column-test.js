@@ -1,6 +1,6 @@
 var should = require("should");
 var helper = require("node-red-node-test-helper");
-var autanaDataTablesNode = require("../autana-data-tables.js");
+var autanaDataTablesNode = require("../appwrite.js");
 
 helper.init(require.resolve("node-red"));
 
@@ -13,6 +13,7 @@ function getSutNode() {
         id: "add-boolean-column",
         type: "add Boolean Column",
         tableName: '',
+        databaseName: '',
         key: "isVip",
         required: false,
         defaultValue: "",
@@ -61,6 +62,9 @@ describe("testing boolean-column node", function () {
                     _autana: {
                         table: {
                             name: 'manolo5'
+                        },
+                        database: {
+                            name: 'prueba'
                         }
                     }
                 });

@@ -1,10 +1,10 @@
 var should = require("should");
 var helper = require("node-red-node-test-helper");
-var autanaDataTablesNode = require("../appwrite.js");
+var autanaDataTablesNode = require("../../appwrite.js");
 
 helper.init(require.resolve("node-red"));
 
-function getHelperNode() {
+function helperNode() {
     return { id: "helper-node", type: "helper" };
 }
 
@@ -54,7 +54,7 @@ function getSutNode() {
 var testFlow = [
     createManolo5TableNode(), 
     addAgeColumnNode(), 
-    getHelperNode() , 
+    helperNode() , 
     getSutNode()];
 
 describe("testing create-index node", function () {

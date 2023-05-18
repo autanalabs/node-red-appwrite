@@ -1,6 +1,6 @@
 var should = require("should");
 var helper = require("node-red-node-test-helper");
-var autanaDataTablesNode = require("../appwrite.js");
+var autanaDataTablesNode = require("../../appwrite.js");
 
 helper.init(require.resolve("node-red"));
 

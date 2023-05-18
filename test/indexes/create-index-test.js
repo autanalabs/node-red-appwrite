@@ -41,23 +41,14 @@ describe("testing create-index node", function () {
             testFlow,
             null,
             function () {
-                var [initNode, helperNode, sutNode] = common.getAndAssertNodes(done, helper);
+                var [initNode, helperNode, sutNode] = common.getAndAssertMainNodes(done, helper);
                 var addAgeColumnNode = common.getAndAssertNodesById(helper, addAgeColumnNodeId);
 
-                common.configureOnCallError(done, [
+                common.configureOnCallErrorCallback(done, [
                     initNode, helperNode, sutNode, addAgeColumnNode
                 ]);
                 
-                initNode.receive({
-                    _autana: {
-                        table: {
-                            name: table
-                        },
-                        database: {
-                            name: database
-                        }
-                    }
-                });
+                initNode.receive({});
             }
         );
     });

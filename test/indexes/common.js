@@ -55,7 +55,7 @@ function getAndAssertNodesById(helper, nodeId) {
     return node;
 }
 
-function configureOnCallError(done, nodes) {
+function configureOnCallErrorCallback(done, nodes) {
     nodes.forEach(node => {
         node.on("call:error", (call) => {
             done(new Error(call.firstArg));
@@ -82,6 +82,6 @@ function getAndAssertMainNodes(done, helper) {
 
 module.exports = { helperNode, createTestTableNode, addAgeColumnNode,
     configureTestSuite, helperNodeId, initNodeId, sutNodeId,
-    getAndAssertNodes: getAndAssertMainNodes, getAndAssertNodesById, 
-    configureOnCallError
+    getAndAssertMainNodes, getAndAssertNodesById, 
+    configureOnCallErrorCallback
 };

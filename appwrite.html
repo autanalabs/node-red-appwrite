@@ -77,7 +77,12 @@
         },
         
         label: function() {
-            return this.project ? "appwrite #"+ this.project : "appwrite";
+            var host = this.endpoint ? this.endpoint : "unknow"
+            if (this.endpoint) {
+                var p = host.indexOf("://")
+                host = host.substr(p+3).replace("/v1","");
+            }
+            return this.project ? this.project + "@" + host : "appwrite";
         },
         exportable: false,
     });

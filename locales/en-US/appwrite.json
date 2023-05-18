@@ -31,7 +31,8 @@
             "error": "error"
         },
         "error": {
-            "failed-to-read-documents": "failed read documents: __err__"
+            "failed-to-read-documents": "failed read documents: __err__",
+            "collection-id-overrided": "You can set collectionId property or msg.collectionId but not both."
         }
     }
 }

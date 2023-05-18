@@ -51,7 +51,7 @@ module.exports = function(RED) {
         //console.log('creating AppwriteDatabaseListDocumentsNode...')
         RED.nodes.createNode(this, n);
         this.appwriteConfig = RED.nodes.getNode(n.appwriteConfig);
-        this.collectionId = n.collectionId;
+        var nodeCollectionId = n.collectionId;
         var node = this;
 
         if (!this.appwriteConfig) {
@@ -80,8 +80,16 @@ module.exports = function(RED) {
 
         node.on("input", function(msg) {
             //console.log('AppwriteDatabaseListDocumentsNode.onMessage()');
+
+            var collectionId = nodeCollectionId || msg.collectionId;
+            if (msg.collectionId && nodeCollectionId && (nodeCollectionId !== msg.collectionId)) {  
+                node.warn(RED._("appwrite.error.collection-id-overrided"));
+                console.warn(RED._("appwrite.error.collection-id-overrided"));
+                return;
+            }
+
             node.status({fill:"blue",shape:"dot",text:"appwrite.status.reading"});
-            let promise = database.listDocuments(this.collectionId);
+            let promise = database.listDocuments(collectionId);
             promise.then(function (response) {
                 msg.payload = response;
                 node.status({});
@@ -96,7 +104,7 @@ module.exports = function(RED) {
             });
         });
     }
-    RED.nodes.registerType("list documents", AppwriteDatabaseListDocumentsNode);
 
+    RED.nodes.registerType("list documents", AppwriteDatabaseListDocumentsNode);
 
 };

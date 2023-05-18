@@ -3,9 +3,34 @@ const initNodeId = "init";
 const sutNodeId = "sut";
 const helperNodeId = "helper-node"
 const should = require("should");
+const mainNodes = require("../appwrite.js");
+
+function testNodes(RED) {
+    RED.nodes.registerType("helper-init", function (n) {
+        createHelperInitNode(RED, this, n);
+    });
+    return mainNodes(RED);
+}
+
+function createHelperInitNode(RED, node, n) {
+    console.log('creating HelperInit node...')
+    RED.nodes.createNode(node, n);
+    node.on("input", function(msg) {
+        console.log('helper-init.onMessage()')
+        node.send(msg);
+    });
+}
 
 function helperNode() {
     return { id: helperNodeId, type: "helper" };
+}
+
+function helperInitNode(nextNode) {
+    return { 
+        id: initNodeId, 
+        type: "helper",
+        wires: [nextNode], 
+    };
 }
 
 function createTestTableNode(nodeId, database, table, nextNode) {
@@ -85,6 +110,13 @@ function getAndAssertMainNodes(done, helper) {
     var helperNode = getAndAssertNodesById(helper, helperNodeId);
     var sutNode = getAndAssertNodesById(helper, sutNodeId);
 
+    if (initNode.type == "helper") {
+        initNode.on("input", function (msg) {
+            console.log("helperInitNode.onMessage()");
+            initNode.send(msg);
+        });
+    }
+
     helperNode.on("input", function (msg) {
         try {
             msg.should.have.property("payload");
@@ -100,5 +132,6 @@ function getAndAssertMainNodes(done, helper) {
 module.exports = { helperNode, createTestTableNode, addAgeColumnNode,
     configureTestSuite, helperNodeId, initNodeId, sutNodeId,
     getAndAssertMainNodes, getAndAssertNodesById, 
-    configureOnCallErrorCallback, addAgeIndexNode, addIntegerColumnNode
+    configureOnCallErrorCallback, addAgeIndexNode, addIntegerColumnNode,
+    helperInitNode, testNodes
 };

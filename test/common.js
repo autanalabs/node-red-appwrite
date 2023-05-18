@@ -2,6 +2,7 @@
 const initNodeId = "init";
 const sutNodeId = "sut";
 const helperNodeId = "helper-node"
+const helperDebugNodeId = "helper-debug-node"
 const should = require("should");
 const mainNodes = require("../appwrite.js");
 
@@ -23,6 +24,14 @@ function createHelperInitNode(RED, node, n) {
 
 function helperNode() {
     return { id: helperNodeId, type: "helper" };
+}
+
+function helperDebugNode(nextNode) {
+    return { 
+        id: helperDebugNodeId, 
+        type: "helper",
+        wires: [nextNode], 
+    };
 }
 
 function helperInitNode(nextNode) {
@@ -126,6 +135,14 @@ function getAndAssertMainNodes(done, helper) {
         }
     });
 
+    var helperDebugNode = helper.getNode(helperDebugNodeId);
+    if (helperDebugNode != null) {
+        helperDebugNode.on("input", function (msg) {
+            console.log("==DEBUG msg=" + JSON.stringify(msg, null, 2));
+            helperDebugNode.send(msg);
+        });
+    }
+
     return [initNode, helperNode, sutNode];
 }
 
@@ -133,5 +150,5 @@ module.exports = { helperNode, createTestTableNode, addAgeColumnNode,
     configureTestSuite, helperNodeId, initNodeId, sutNodeId,
     getAndAssertMainNodes, getAndAssertNodesById, 
     configureOnCallErrorCallback, addAgeIndexNode, addIntegerColumnNode,
-    helperInitNode, testNodes
+    helperInitNode, testNodes, helperDebugNode, helperDebugNodeId
 };

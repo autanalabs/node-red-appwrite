@@ -17,7 +17,7 @@ function sut() {
         type: "list tables",
         databaseName: database,
         tableName: null,
-        wires: [[common.helperNodeId]],
+        wires: [[common.helperDebugNodeId]],
     };
 }
 
@@ -25,6 +25,7 @@ var testFlow = [
     common.createTestTableNode(common.initNodeId, database, table, [anotherTableNodeId]),
     common.createTestTableNode(anotherTableNodeId, database, anotherTable, [common.sutNodeId]), 
     common.helperNode(), 
+    common.helperDebugNode([common.helperNodeId]),
     sut()
 ];
 

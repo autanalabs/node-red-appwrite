@@ -55,9 +55,11 @@ function getAndAssertNodesById(helper, nodeId) {
     return node;
 }
 
-function configureOnCallError(done, node) {
-    node.on("call:error", (call) => {
-        done(new Error(call.firstArg));
+function configureOnCallError(done, nodes) {
+    nodes.forEach(node => {
+        node.on("call:error", (call) => {
+            done(new Error(call.firstArg));
+        });
     });
 }
 
@@ -69,10 +71,6 @@ function getAndAssertNodes(done, helper) {
     should(initNode).not.be.null();
     should(helperNode).not.be.null();
     should(sutNode).not.be.null();
-  
-    initNode.on("call:error", (call) => {
-        done(new Error(call.firstArg));
-    });
 
     helperNode.on("input", function (msg) {
         try {
@@ -81,10 +79,6 @@ function getAndAssertNodes(done, helper) {
         } catch (err) {
             done(err);
         }
-    });
-
-    sutNode.on("call:error", (call) => {
-        done(new Error(call.firstArg));
     });
 
     return [initNode, helperNode, sutNode];

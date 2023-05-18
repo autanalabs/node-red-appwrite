@@ -1,25 +1,30 @@
 
+const initNodeId = "init";
+const sutNodeId = "sut";
+const helperNodeId = "helper-node"
+
 function helperNode() {
-    return { id: "helper-node", type: "helper" };
+    return { id: helperNodeId, type: "helper" };
 }
 
-function createTestTableNode() {
+function createTestTableNode(nodeId, database, table, nextNode) {
+
     return {
-        id: "create-manolo5-table",
+        id: nodeId,
         type: "create table",
-        tableName: 'manolo5',
-        databaseName: 'prueba',
+        tableName: table,
+        databaseName: database,
         skipExists: true,
-        wires: [["add-integer-column"]],
+        wires: [nextNode],
     };
 }
 
-function addAgeColumnNode() {
+function addAgeColumnNode(nodeId, database, table, nextNode) {
     return {
-        id: "add-integer-column",
+        id: nodeId,
         type: "add Integer Column",
-        tableName: 'manolo5',
-        databaseName: 'prueba',
+        databaseName: database,
+        tableName: table,
         key: "age",
         min: null,
         max: null,
@@ -27,7 +32,7 @@ function addAgeColumnNode() {
         defaultValue: "",
         isArray: false,
         skipExists: true,
-        wires: [["create-index"]],
+        wires: [nextNode],
     };
 }
 
@@ -44,5 +49,5 @@ function configureTestSuite(suite, helper) {
 }
 
 module.exports = { helperNode, createTestTableNode, addAgeColumnNode,
-    configureTestSuite
+    configureTestSuite, helperNodeId, initNodeId, sutNodeId
 };

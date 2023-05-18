@@ -1,28 +1,31 @@
 const common = require('./common');
-var should = require("should");
-var helper = require("node-red-node-test-helper");
-var autanaDataTablesNode = require("../../appwrite.js");
+const should = require("should");
+const helper = require("node-red-node-test-helper");
+const autanaDataTablesNode = require("../../appwrite.js");
+const database = "prueba";
+const table = 'manolo5';
+const addAgeColumnNodeId = "add-age-column";
 
 helper.init(require.resolve("node-red"));
 
 function sut() {
     return {
-        id: "create-index",
+        id: common.sutNodeId,
         type: "create Index",
-        tableName: 'manolo5',
-        databaseName: 'prueba',
+        databaseName: database,
+        tableName: table,
         indexName: "ix_age",
         indexType: "key",
         columns: "age",
         orders: "ASC",
         skipExists: true,
-        wires: [["helper-node"]],
+        wires: [[common.helperNodeId]],
     };
 }
 
 var testFlow = [
-    common.createTestTableNode(), 
-    common.addAgeColumnNode(), 
+    common.createTestTableNode(common.initNodeId, database, table, [addAgeColumnNodeId]), 
+    common.addAgeColumnNode(addAgeColumnNodeId, database, table, [common.sutNodeId]), 
     common.helperNode(), 
     sut()
 ];
@@ -38,9 +41,9 @@ describe("testing create-index node", function () {
             testFlow,
             null,
             function () {
-                var initNode = helper.getNode("create-manolo5-table");
-                var helperNode = helper.getNode("helper-node");
-                var sutNode = helper.getNode("create-index");
+                var initNode = helper.getNode(common.initNodeId);
+                var helperNode = helper.getNode(common.helperNodeId);
+                var sutNode = helper.getNode(common.sutNodeId);
             
                 should(sutNode).not.be.null();
                 should(helperNode).not.be.null();
@@ -66,10 +69,10 @@ describe("testing create-index node", function () {
                 initNode.receive({
                     _autana: {
                         table: {
-                            name: 'manolo5'
+                            name: table
                         },
                         database: {
-                            name: 'prueba'
+                            name: database
                         }
                     }
                 });

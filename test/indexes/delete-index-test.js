@@ -1,4 +1,4 @@
-const common = require('./common');
+const common = require('../common');
 const should = require("should");
 const helper = require("node-red-node-test-helper");
 const autanaDataTablesNode = require("../../appwrite.js");

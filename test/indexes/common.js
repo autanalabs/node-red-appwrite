@@ -49,6 +49,18 @@ function configureTestSuite(suite, helper) {
     });
 }
 
+function getAndAssertNodesById(helper, nodeId) {
+    var node = helper.getNode(nodeId);
+    should(node).not.be.null();
+    return node;
+}
+
+function configureOnCallError(done, node) {
+    node.on("call:error", (call) => {
+        done(new Error(call.firstArg));
+    });
+}
+
 function getAndAssertNodes(done, helper) {
     var initNode = helper.getNode(initNodeId);
     var helperNode = helper.getNode(helperNodeId);
@@ -80,5 +92,5 @@ function getAndAssertNodes(done, helper) {
 
 module.exports = { helperNode, createTestTableNode, addAgeColumnNode,
     configureTestSuite, helperNodeId, initNodeId, sutNodeId,
-    getAndAssertNodes
+    getAndAssertNodes, getAndAssertNodesById, configureOnCallError
 };

@@ -42,7 +42,10 @@ describe("testing create-index node", function () {
             null,
             function () {
                 var [initNode, helperNode, sutNode] = common.getAndAssertNodes(done, helper);
-               
+                var addAgeColumnNode = common.getAndAssertNodesById(helper, addAgeColumnNodeId);
+
+                common.configureOnCallError(done, addAgeColumnNode);
+                
                 initNode.receive({
                     _autana: {
                         table: {

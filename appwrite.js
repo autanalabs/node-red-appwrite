@@ -341,7 +341,7 @@ module.exports = function(RED) {
     }
 
     function AutanaDataTableListTables(n) {
-        console.log('creating AutanaDataTableReadSchemaNode...')
+        console.log('creating AutanaDataTableListTablesNode...')
         try {
             RED.nodes.createNode(this, n);
             let databaseName = n.databaseName;
@@ -350,7 +350,7 @@ module.exports = function(RED) {
             let database = getDatabase();
 
             node.on("input", function(msg) {
-                console.log('AutanaDataTableReadSchemaNode.onMessage()');
+                console.log('AutanaDataTableListTablesNode.onMessage()');
     
                 let tableName = nodeTableName || msg.tableName;
     

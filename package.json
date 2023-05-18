@@ -36,7 +36,8 @@
     "test": "mocha --recursive test/",
     "test_indexes": "mocha test/indexes/",
     "test_columns": "mocha test/columns/",
-    "test_tables": "mocha test/tables/"
+    "test_tables": "mocha test/tables/",
+    "test2": "mocha test/tables/list-tables"
 
   },
 

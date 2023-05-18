@@ -4,6 +4,8 @@ const helper = require("node-red-node-test-helper");
 const autanaDataTablesNode = require("../../appwrite.js");
 const database = "prueba";
 const table = 'manolo5';
+const anotherTable = 'manolo6';
+const anotherTableNodeId = 'add-another-table';
 const addAgeColumnNodeId = "add-age-column";
 const addAgeIndexNodeId = "add-age-index"
 
@@ -12,35 +14,35 @@ helper.init(require.resolve("node-red"));
 function sut() {
     return {
         id: common.sutNodeId,
-        type: "delete table",
+        type: "list tables",
         databaseName: database,
-        tableName: table,
-        skipNotFound: true,
+        tableName: null,
         wires: [[common.helperNodeId]],
     };
 }
 
 var testFlow = [
-    common.createTestTableNode(common.initNodeId, database, table, [common.sutNodeId]), 
+    common.createTestTableNode(common.initNodeId, database, table, [anotherTableNodeId]),
+    common.createTestTableNode(anotherTableNodeId, database, anotherTable, [common.sutNodeId]), 
     common.helperNode(), 
     sut()
 ];
 
-describe("testing delete-table node", function () {
+describe("testing list-tables node", function () {
 
     common.configureTestSuite(this, helper);
 
-    it("delete existent table test", function (done) {
-        this.timeout(5000);
+    it("list tables test", function (done) {
+        this.timeout(0);
         helper.load(
             autanaDataTablesNode,
             testFlow,
             null,
             function () {
                 var [initNode, helperNode, sutNode] = common.getAndAssertMainNodes(done, helper);
-                
+                var anotherTableNode = common.getAndAssertNodesById(helper, anotherTableNodeId);
                 common.configureOnCallErrorCallback(done, [
-                    initNode, helperNode, sutNode
+                    initNode, helperNode, sutNode, anotherTableNode
                 ]);
                 
                 initNode.receive({});

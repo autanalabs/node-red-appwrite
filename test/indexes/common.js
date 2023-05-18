@@ -49,14 +49,31 @@ function configureTestSuite(suite, helper) {
     });
 }
 
-function getAndAssertNodes(suite, helper) {
+function getAndAssertNodes(done, helper) {
     var initNode = helper.getNode(initNodeId);
     var helperNode = helper.getNode(helperNodeId);
     var sutNode = helper.getNode(sutNodeId);
 
-    should(sutNode).not.be.null();
-    should(helperNode).not.be.null();
     should(initNode).not.be.null();
+    should(helperNode).not.be.null();
+    should(sutNode).not.be.null();
+  
+    initNode.on("call:error", (call) => {
+        done(new Error(call.firstArg));
+    });
+
+    helperNode.on("input", function (msg) {
+        try {
+            msg.should.have.property("payload");
+            done();
+        } catch (err) {
+            done(err);
+        }
+    });
+
+    sutNode.on("call:error", (call) => {
+        done(new Error(call.firstArg));
+    });
 
     return [initNode, helperNode, sutNode];
 }

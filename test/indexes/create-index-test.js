@@ -41,25 +41,8 @@ describe("testing create-index node", function () {
             testFlow,
             null,
             function () {
-                var [initNode, helperNode, sutNode] = common.getAndAssertNodes(this, helper);
+                var [initNode, helperNode, sutNode] = common.getAndAssertNodes(done, helper);
                
-                helperNode.on("input", function (msg) {
-                    try {
-                        msg.should.have.property("payload");
-                        done();
-                    } catch (err) {
-                        done(err);
-                    }
-                });
-
-                initNode.on("call:error", (call) => {
-                    done(new Error(call.firstArg));
-                });
-
-                sutNode.on("call:error", (call) => {
-                    done(new Error(call.firstArg));
-                });
-
                 initNode.receive({
                     _autana: {
                         table: {

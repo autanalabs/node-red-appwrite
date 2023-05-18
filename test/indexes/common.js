@@ -63,14 +63,10 @@ function configureOnCallError(done, nodes) {
     });
 }
 
-function getAndAssertNodes(done, helper) {
-    var initNode = helper.getNode(initNodeId);
-    var helperNode = helper.getNode(helperNodeId);
-    var sutNode = helper.getNode(sutNodeId);
-
-    should(initNode).not.be.null();
-    should(helperNode).not.be.null();
-    should(sutNode).not.be.null();
+function getAndAssertMainNodes(done, helper) {
+    var initNode = getAndAssertNodesById(helper, initNodeId);
+    var helperNode = getAndAssertNodesById(helper, helperNodeId);
+    var sutNode = getAndAssertNodesById(helper, sutNodeId);
 
     helperNode.on("input", function (msg) {
         try {
@@ -86,5 +82,6 @@ function getAndAssertNodes(done, helper) {
 
 module.exports = { helperNode, createTestTableNode, addAgeColumnNode,
     configureTestSuite, helperNodeId, initNodeId, sutNodeId,
-    getAndAssertNodes, getAndAssertNodesById, configureOnCallError
+    getAndAssertNodes: getAndAssertMainNodes, getAndAssertNodesById, 
+    configureOnCallError
 };

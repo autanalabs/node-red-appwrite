@@ -29,11 +29,11 @@ var testFlow = [
     sut()
 ];
 
-describe("testing create-index node", function () {
+describe("testing delete-index node", function () {
 
     common.configureTestSuite(this, helper);
 
-    it("add index test", function (done) {
+    it("delete existent index test", function (done) {
         this.timeout(5000);
         helper.load(
             autanaDataTablesNode,

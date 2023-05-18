@@ -35,8 +35,8 @@
   "scripts": {
     "test": "mocha test/",
     "test1": "mocha test/boolean-column-test",
-    "test2": "mocha test/indexes/create-index-test",
-    "test3": "mocha test/indexes/delete-index-test"
+    "test_indexes": "mocha test/indexes/"
+    
   },
 
 

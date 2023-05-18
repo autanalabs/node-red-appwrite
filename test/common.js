@@ -19,14 +19,16 @@ function createTestTableNode(nodeId, database, table, nextNode) {
         wires: [nextNode],
     };
 }
-
 function addAgeColumnNode(nodeId, database, table, nextNode) {
+    return addIntegerColumnNode(nodeId, database, table, "age", nextNode);
+}
+function addIntegerColumnNode(nodeId, database, table, name, nextNode) {
     return {
         id: nodeId,
         type: "add Integer Column",
         databaseName: database,
         tableName: table,
-        key: "age",
+        key: name,
         min: null,
         max: null,
         required: true,
@@ -98,5 +100,5 @@ function getAndAssertMainNodes(done, helper) {
 module.exports = { helperNode, createTestTableNode, addAgeColumnNode,
     configureTestSuite, helperNodeId, initNodeId, sutNodeId,
     getAndAssertMainNodes, getAndAssertNodesById, 
-    configureOnCallErrorCallback, addAgeIndexNode
+    configureOnCallErrorCallback, addAgeIndexNode, addIntegerColumnNode
 };

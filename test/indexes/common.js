@@ -37,6 +37,21 @@ function addAgeColumnNode(nodeId, database, table, nextNode) {
     };
 }
 
+function addAgeIndexNode(nodeId, database, table, nextNode) {
+    return {
+        id: nodeId,
+        type: "create Index",
+        databaseName: database,
+        tableName: table,
+        indexName: "ix_age",
+        indexType: "key",
+        columns: "age",
+        orders: "ASC",
+        skipExists: true,
+        wires: [nextNode],
+    };
+}
+
 function configureTestSuite(suite, helper) {
     suite.beforeEach(function (done) {
         helper.startServer(done);
@@ -83,5 +98,5 @@ function getAndAssertMainNodes(done, helper) {
 module.exports = { helperNode, createTestTableNode, addAgeColumnNode,
     configureTestSuite, helperNodeId, initNodeId, sutNodeId,
     getAndAssertMainNodes, getAndAssertNodesById, 
-    configureOnCallErrorCallback
+    configureOnCallErrorCallback, addAgeIndexNode
 };

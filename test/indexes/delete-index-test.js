@@ -1,304 +1,58 @@
-var should = require("should");
-var helper = require("node-red-node-test-helper");
-var autanaDataTablesNode = require("../../appwrite.js");
+const common = require('./common');
+const should = require("should");
+const helper = require("node-red-node-test-helper");
+const autanaDataTablesNode = require("../../appwrite.js");
+const database = "prueba";
+const table = 'manolo5';
+const addAgeColumnNodeId = "add-age-column";
+const addAgeIndexNodeId = "add-age-index"
 
 helper.init(require.resolve("node-red"));
 
-function getHelperNode() {
-    return { id: "helper-node", type: "helper" };
-}
-
-function getSutNode() {
+function sut() {
     return {
-        id: "delete-index",
+        id: common.sutNodeId,
         type: "delete Index",
-        tableName: '',
-        databaseName: '',
+        databaseName: database,
+        tableName: table,
         indexName: "ix_age",
-        skipNotFound: true,
-        wires: [["helper-node"]],
+        skipExists: true,
+        wires: [[common.helperNodeId]],
     };
 }
 
-var testFlow = [getHelperNode(), getSutNode()];
+var testFlow = [
+    common.createTestTableNode(common.initNodeId, database, table, [addAgeColumnNodeId]), 
+    common.addAgeColumnNode(addAgeColumnNodeId, database, table, [addAgeIndexNodeId]), 
+    common.addAgeIndexNode(addAgeIndexNodeId, database, table, [common.sutNodeId]),
+    common.helperNode(), 
+    sut()
+];
 
-describe("testing delete-index node", function () {
+describe("testing create-index node", function () {
 
-    beforeEach(function (done) {
-        helper.startServer(done);
-    });
-
-    afterEach(function (done) {
-        helper.unload().then(function () {
-            helper.stopServer(done);
-        });
-    });
+    common.configureTestSuite(this, helper);
 
     it("add index test", function (done) {
+        this.timeout(5000);
         helper.load(
             autanaDataTablesNode,
             testFlow,
             null,
             function () {
-                var helperNode = helper.getNode("helper-node");
-                var sutNode = helper.getNode("delete-index");
+                var [initNode, helperNode, sutNode] = common.getAndAssertMainNodes(done, helper);
+                var addAgeColumnNode = common.getAndAssertNodesById(helper, addAgeColumnNodeId);
+                var addAgeIndexNode = common.getAndAssertNodesById(helper, addAgeIndexNodeId);
+
+
+                common.configureOnCallErrorCallback(done, [
+                    initNode, helperNode, sutNode, addAgeColumnNode,
+                    addAgeIndexNode
+                ]);
                 
-                should(sutNode).not.be.null();
-                //should(sutNode.n.tableName).not.be.null();
-
-                /*
-                sutNode.on("call:status", (call) => {
-                    should(call.firstArg.text).be.equal("connected");
-                    done();
-                });
-                */
-
-                helperNode.on("input", function (msg) {
-                    try {
-                        msg.should.have.property("payload");
-                        //msg.payload.should.have.property("key");
-                        done();
-                    } catch (err) {
-                        done(err);
-                    }
-                });
-
-                sutNode.receive({
-                    _autana: {
-                        table: {
-                            name: 'manolo5'
-                        },
-                        database: {
-                            name: 'prueba'
-                        }
-                    }
-                });
-
-                sutNode.on("call:error", (call) => {
-                    done(new Error(call.firstArg));
-                });
-
+                initNode.receive({});
             }
         );
     });
-
-    /*
-    it("insertOne", function (done) {
-        helper.load(
-            mongodbNode,
-            testFlow,
-            { "config-node": testConfig.credentials },
-            function () {
-                var helperNode = helper.getNode("helper-node");
-                var operationNode = helper.getNode("operation-node");
-
-                helperNode.on("input", function (msg) {
-                    try {
-                        msg.should.have.property("payload");
-                        msg.payload.should.have.property("acknowledged", true);
-                        done();
-                    } catch (err) {
-                        done(err);
-                    }
-                });
-
-                operationNode.receive({
-                    payload: [{ uid: uid }],
-                    collection: testConfig.collection,
-                    operation: "insertOne",
-                });
-
-                operationNode.on("call:error", (call) => {
-                    done(new Error(call.firstArg));
-                });
-            }
-        );
-    });
-
-    it("implicit ObjectId", function (done) {
-        helper.load(
-            mongodbNode,
-            testFlow,
-            { "config-node": testConfig.credentials },
-            function () {
-                var helperNode = helper.getNode("helper-node");
-                var operationNode = helper.getNode("operation-node");
-
-                // step 1
-                operationNode.receive({
-                    payload: [{}],
-                    collection: testConfig.collection,
-                    operation: "deleteMany",
-                });
-
-                helperNode.on("input", function (msg) {
-                    if (msg.operation === "deleteMany") {
-                        // after delete many
-                        operationNode.receive({
-                            payload: [
-                                {
-                                    _id: ObjectId("624b3c625a145193099962d1"),
-                                    success: true,
-                                },
-                            ],
-                            collection: testConfig.collection,
-                            operation: "insertOne",
-                        });
-                        return;
-                    } else if (msg.operation === "insertOne") {
-                        // after insertOne
-                        operationNode.receive({
-                            payload: [{ _id: "624b3c625a145193099962d1" }],
-                            collection: testConfig.collection,
-                            operation: "findOne",
-                        });
-                        return;
-                    } else if (msg.operation === "findOne") {
-                        msg.should.have.property("payload");
-                        msg.payload.should.have.property("success");
-                        done();
-                    } else {
-                        done(new Error("invalid input"));
-                    }
-                });
-
-                operationNode.on("call:error", (call) => {
-                    done(new Error(call.firstArg));
-                });
-            }
-        );
-    });
-
-    it("find to array test", function (done) {
-        helper.load(
-            mongodbNode,
-            testFlow,
-            { "config-node": testConfig.credentials },
-            function () {
-                var helperNode = helper.getNode("helper-node");
-                var operationNode = helper.getNode("operation-node");
-
-                helperNode.on("input", function (msg) {
-                    try {
-                        msg.should.have.property("payload");
-                        msg.payload.should.be.instanceOf(Array);
-                        done();
-                    } catch (err) {
-                        done(err);
-                    }
-                });
-
-                operationNode.receive({
-                    collection: testConfig.collection,
-                    operation: "find",
-                    payload: [{}],
-                });
-
-                operationNode.on("call:error", (call) => {
-                    done(new Error(call.firstArg));
-                });
-            }
-        );
-    });
-
-    it("find for each", function (done) {
-        helper.load(
-            mongodbNode,
-            [
-                getHelperNode(),
-                getConfigNode(),
-                { ...getOperationNode(), output: "forEach" },
-            ],
-            { "config-node": testConfig.credentials },
-            function () {
-                var helperNode = helper.getNode("helper-node");
-                var operationNode = helper.getNode("operation-node");
-
-                let msgCount = 0;
-
-                helperNode.on("input", (msg) => {
-                    if (msg.afterInsertMany) {
-                        operationNode.receive({
-                            operation: "aggregate",
-                            payload: [
-                                [
-                                    { $match: { test: { $in: [1, 2, 3] } } },
-                                    { $limit: 3 },
-                                ],
-                            ],
-                        });
-                    } else {
-                        // count to three
-                        msgCount++;
-                        if (msgCount === 3) {
-                            done();
-                        }
-                    }
-                });
-
-                operationNode.receive({
-                    operation: "insertMany",
-                    payload: [[{ test: 1 }, { test: 2 }, { test: 3 }]],
-                    afterInsertMany: true,
-                });
-
-                operationNode.on("call:error", (call) => {
-                    done(new Error(call.firstArg));
-                });
-            }
-        );
-    });
-
-    it("mongodb error", function (done) {
-        helper.load(
-            mongodbNode,
-            testFlow,
-            { "config-node": testConfig.credentials },
-            function () {
-                var operationNode = helper.getNode("operation-node");
-
-                operationNode.receive({
-                    payload: [{ $fail: uid }],
-                    collection: testConfig.collection,
-                    operation: "findOne",
-                });
-
-                operationNode.on("call:error", (call) => {
-                    done();
-                });
-            }
-        );
-    });
-
-    it("collection operation not supported", function (done) {
-        helper.load(
-            mongodbNode,
-            testFlow,
-            { "config-node": testConfig.credentials },
-            function () {
-                var operationNode = helper.getNode("operation-node");
-
-                operationNode.receive({
-                    payload: [{ uid: uid }],
-                    collection: testConfig.collection,
-                    operation: "willFail",
-                });
-
-                operationNode.on("call:error", (call) => {
-                    try {
-                        should(call.firstArg).have.property(
-                            "message",
-                            'unknown operation: "willFail"'
-                        );
-                    }catch(err){
-                        done(err);
-                    }
-                    
-                    done();
-                });
-            }
-        );
-    });
-    */
 });
 

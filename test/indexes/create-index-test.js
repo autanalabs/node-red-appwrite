@@ -23,20 +23,13 @@ function sut() {
 var testFlow = [
     common.createTestTableNode(), 
     common.addAgeColumnNode(), 
-    common.helperNode() , 
-    sut()];
+    common.helperNode(), 
+    sut()
+];
 
 describe("testing create-index node", function () {
 
-    beforeEach(function (done) {
-        helper.startServer(done);
-    });
-
-    afterEach(function (done) {
-        helper.unload().then(function () {
-            helper.stopServer(done);
-        });
-    });
+    common.configureTestSuite(this, helper);
 
     it("add index test", function (done) {
         this.timeout(5000);

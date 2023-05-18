@@ -31,5 +31,18 @@ function addAgeColumnNode() {
     };
 }
 
-module.exports = { helperNode, createTestTableNode, addAgeColumnNode
+function configureTestSuite(suite, helper) {
+    suite.beforeEach(function (done) {
+        helper.startServer(done);
+    });
+
+    suite.afterEach(function (done) {
+        helper.unload().then(function () {
+            helper.stopServer(done);
+        });
+    });
+}
+
+module.exports = { helperNode, createTestTableNode, addAgeColumnNode,
+    configureTestSuite
 };

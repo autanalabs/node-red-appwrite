@@ -41,14 +41,8 @@ describe("testing create-index node", function () {
             testFlow,
             null,
             function () {
-                var initNode = helper.getNode(common.initNodeId);
-                var helperNode = helper.getNode(common.helperNodeId);
-                var sutNode = helper.getNode(common.sutNodeId);
-            
-                should(sutNode).not.be.null();
-                should(helperNode).not.be.null();
-                should(initNode).not.be.null();
-                
+                var [initNode, helperNode, sutNode] = common.getAndAssertNodes(this, helper);
+               
                 helperNode.on("input", function (msg) {
                     try {
                         msg.should.have.property("payload");

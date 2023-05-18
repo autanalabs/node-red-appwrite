@@ -2,6 +2,7 @@
 const initNodeId = "init";
 const sutNodeId = "sut";
 const helperNodeId = "helper-node"
+const should = require("should");
 
 function helperNode() {
     return { id: helperNodeId, type: "helper" };
@@ -48,6 +49,19 @@ function configureTestSuite(suite, helper) {
     });
 }
 
+function getAndAssertNodes(suite, helper) {
+    var initNode = helper.getNode(initNodeId);
+    var helperNode = helper.getNode(helperNodeId);
+    var sutNode = helper.getNode(sutNodeId);
+
+    should(sutNode).not.be.null();
+    should(helperNode).not.be.null();
+    should(initNode).not.be.null();
+
+    return [initNode, helperNode, sutNode];
+}
+
 module.exports = { helperNode, createTestTableNode, addAgeColumnNode,
-    configureTestSuite, helperNodeId, initNodeId, sutNodeId
+    configureTestSuite, helperNodeId, initNodeId, sutNodeId,
+    getAndAssertNodes
 };

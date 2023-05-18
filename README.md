@@ -1,7 +1,7 @@
 node-red-contrib-appwrite
 =================
 
-A <a href="http://nodered.org" target="_new">Node-RED</a> node to wrap <a href="http://appwrite.io" target="_new">appwrite</a> SDK operations.
+<a href="http://nodered.org" target="_new">Node-RED</a> connector for <a href="http://appwrite.io" target="_new">appwrite</a>.
 
 Install
 -------

@@ -81,7 +81,7 @@ function helperFunctionNode(nodeId, nextNode) {
 function insertRowNode(nodeId, database, table, nextNode) {
     return {
         id: nodeId,
-        type: "insert row",
+        type: "com.autana.insertRow",
         appwriteConfig: appwriteConfigNodeId,
         databaseName: database,
         tableName: table,
@@ -94,7 +94,7 @@ function createTestTableNode(nodeId, database, table, nextNode) {
 
     return {
         id: nodeId,
-        type: "create table",
+        type: "com.autana.createTable",
         appwriteConfig: appwriteConfigNodeId,
         tableName: table,
         databaseName: database,

@@ -12,7 +12,7 @@ helper.init(require.resolve("node-red"));
 function sut() {
     return {
         id: common.sutNodeId,
-        type: "insert row",
+        type: "com.autana.insertRow",
         appwriteConfig: common.appwriteConfigNodeId,
         databaseName: database,
         tableName: table,

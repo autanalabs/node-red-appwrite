@@ -16,7 +16,7 @@ helper.init(require.resolve("node-red"));
 function sut() {
     return {
         id: common.sutNodeId,
-        type: "delete row",
+        type: "com.autana.deleteRow",
         appwriteConfig: common.appwriteConfigNodeId,
         databaseName: database,
         tableName: table,

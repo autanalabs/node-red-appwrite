@@ -14,7 +14,7 @@ helper.init(require.resolve("node-red"));
 function sut() {
     return {
         id: common.sutNodeId,
-        type: "list tables",
+        type: "com.autana.listTables",
         appwriteConfig: common.appwriteConfigNodeId,
         databaseName: database,
         tableName: null,
@@ -37,7 +37,7 @@ describe("testing list-tables node", function () {
 
     common.configureTestSuite(this, helper);
 
-    it("list tables test", function (done) {
+    it("com.autana.listTables test", function (done) {
         this.timeout(5000);
         helper.load(
             autanaDataTablesNode,

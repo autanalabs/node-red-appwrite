@@ -20,7 +20,7 @@ helper.init(require.resolve("node-red"));
 function sut() {
     return {
         id: common.sutNodeId,
-        type: "read table",
+        type: "com.autana.readTable",
         appwriteConfig: common.appwriteConfigNodeId,
         databaseName: database,
         tableName: table,

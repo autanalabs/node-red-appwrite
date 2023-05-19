@@ -626,14 +626,14 @@ module.exports = function(RED) {
         apikey: { type:"text" }
     });
     
-    RED.nodes.registerType("read table", AutanaDataTableReadNode);
-    RED.nodes.registerType("insert row", AutanaDataTableInsertNode);
-    RED.nodes.registerType("update row", AutanaDataTableUpdateNode);
-    RED.nodes.registerType("delete row", AutanaDataTableDeleteNode);
-    RED.nodes.registerType("read schema", AutanaDataTableReadSchema);
-    RED.nodes.registerType("list tables", AutanaDataTableListTables);
-    RED.nodes.registerType("create table", AutanaDataTableCreateTable);
-    RED.nodes.registerType("delete table", AutanaDataTableDeleteTable);
+    RED.nodes.registerType("com.autana.readTable", AutanaDataTableReadNode);
+    RED.nodes.registerType("com.autana.insertRow", AutanaDataTableInsertNode);
+    RED.nodes.registerType("com.autana.updateRow", AutanaDataTableUpdateNode);
+    RED.nodes.registerType("com.autana.deleteRow", AutanaDataTableDeleteNode);
+    RED.nodes.registerType("com.autana.readSchema", AutanaDataTableReadSchema);
+    RED.nodes.registerType("com.autana.listTables", AutanaDataTableListTables);
+    RED.nodes.registerType("com.autana.createTable", AutanaDataTableCreateTable);
+    RED.nodes.registerType("com.autana.deleteTable", AutanaDataTableDeleteTable);
    
 
     const columns = require('./lib/columns');

@@ -15,6 +15,7 @@ function sut() {
     return {
         id: common.sutNodeId,
         type: "list tables",
+        appwriteConfig: common.appwriteConfigNodeId,
         databaseName: database,
         tableName: null,
         wires: [[common.helperDebugNodeId]],
@@ -22,6 +23,7 @@ function sut() {
 }
 
 var testFlow = [
+    common.appWriteConfigNode(),
     common.createTestTableNode(common.initNodeId, database, table, [anotherTableNodeId]),
     common.createTestTableNode(anotherTableNodeId, database, anotherTable, [common.sutNodeId]), 
     common.helperNode(), 

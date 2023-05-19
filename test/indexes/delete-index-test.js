@@ -13,6 +13,7 @@ function sut() {
     return {
         id: common.sutNodeId,
         type: "delete Index",
+        appwriteConfig: common.appwriteConfigNodeId,
         databaseName: database,
         tableName: table,
         indexName: "ix_age",
@@ -22,6 +23,7 @@ function sut() {
 }
 
 var testFlow = [
+    common.appWriteConfigNode(),
     common.createTestTableNode(common.initNodeId, database, table, [addAgeColumnNodeId]), 
     common.addAgeColumnNode(addAgeColumnNodeId, database, table, [addAgeIndexNodeId]), 
     common.addAgeIndexNode(addAgeIndexNodeId, database, table, [common.sutNodeId]),

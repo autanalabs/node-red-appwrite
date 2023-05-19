@@ -13,6 +13,7 @@ function sut() {
     return {
         id: common.sutNodeId,
         type: "delete Column",
+        appwriteConfig: common.appwriteConfigNodeId,
         tableName: table,
         databaseName: database,
         key: column,
@@ -22,6 +23,7 @@ function sut() {
 }
 
 var testFlow = [
+    common.appWriteConfigNode(),
     common.createTestTableNode(common.initNodeId, database, table, [addColumnNodeId]), 
     common.addIntegerColumnNode(addColumnNodeId, database, table, column, [common.sutNodeId]), 
     common.helperNode(), 

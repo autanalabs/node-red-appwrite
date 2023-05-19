@@ -11,6 +11,7 @@ function sut() {
     return {
         id: common.sutNodeId,
         type: "add String Column",
+        appwriteConfig: common.appwriteConfigNodeId,
         tableName: table,
         databaseName: database,
         key: "firstName",
@@ -24,6 +25,7 @@ function sut() {
 }
 
 var testFlow = [
+    common.appWriteConfigNode(),
     common.createTestTableNode(common.initNodeId, database, table, [common.sutNodeId]),  
     common.helperNode(), 
     sut()

@@ -13,6 +13,7 @@ function sut() {
     return {
         id: common.sutNodeId,
         type: "insert row",
+        appwriteConfig: common.appwriteConfigNodeId,
         databaseName: database,
         tableName: table,
         docId: null,
@@ -21,6 +22,7 @@ function sut() {
 }
 
 var testFlow = [
+    common.appWriteConfigNode(),
     common.createTestTableNode(common.initNodeId, database, table, [addAgeColumnNodeId]), 
     common.addAgeColumnNode(addAgeColumnNodeId, database, table, [common.helperMessageSetupNodeId]), 
     common.helperMessageSetupNode([common.sutNodeId]),

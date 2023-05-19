@@ -22,7 +22,22 @@ module.exports = function(RED) {
         return (!str || str.length === 0 );
     }
 
-    function getDatabase() {
+    function getDatabase(n) {
+
+        if (!n.appwriteConfig) {
+            node.warn(RED._("appwrite.warn.missing-config"));
+            console.warn(RED._("appwrite.warn.missing-config"));
+            return;
+        }
+
+        var appwriteConfig = RED.nodes.getNode(n.appwriteConfig);
+
+        if (!appwriteConfig) {
+            node.warn(RED._("appwrite.warn.missing-config"));
+            console.warn(RED._("appwrite.warn.missing-config"));
+            return;
+        }
+
         var sdk = require('node-appwrite');
         if (!sdk) {
             throw new Error(RED._("autanaCloud.warn.wrong-config"));
@@ -32,10 +47,16 @@ module.exports = function(RED) {
             throw new Error(RED._("autanaCloud.warn.missing-client"));
         }
         client
+            .setEndpoint(appwriteConfig.params.endpoint)
+            .setProject(appwriteConfig.params.project)
+            .setKey(appwriteConfig.params.apiKey);
+
+        /*
+         client
             .setEndpoint("https://cloud.appwrite.io/v1")
             .setProject("autana")
             .setKey("9e49d48d5914598f3d9ade48d058ee1af3e04655793bcab0dca7f0bb5ca0b707b6346d6d9ef5ec2a09de2275c95af95b908a2af3c4d3d3bf508b59ae505c6b3cd45fb5a58f5b43f243fcefded0716269da00d6ca4a6e5400fc926afc8916f4223d55ffbe8842ca3045cd4188dea301ba6c5ba88760e2e5731c274167d28e25b1");
-        
+        */
         let database = new sdk.Databases(client);
         return database;
     }
@@ -48,7 +69,7 @@ module.exports = function(RED) {
             let nodeTableName = n.tableName;
             let nodeQuery = n.query;
             let node = this;
-            let database = getDatabase();
+            let database = getDatabase(n);
 
             node.on("input", function(msg) {
                 console.log('AutanaDataTableReadNode.onMessage()');
@@ -108,7 +129,7 @@ module.exports = function(RED) {
             let nodeTableName = n.tableName;
             let nodeDocId = n.docId;
             let node = this;
-            let database = getDatabase();
+            let database = getDatabase(n);
 
             node.on("input", function(msg) {
                 console.log('AutanaDataTableInsertNode.onMessage()');
@@ -164,7 +185,7 @@ module.exports = function(RED) {
             let nodeTableName = n.tableName;
             let nodeDocId = n.docId;
             let node = this;
-            let database = getDatabase();
+            let database = getDatabase(n);
 
             node.on("input", function(msg) {
                 console.log('AutanaDataTableUpdateNode.onMessage()');
@@ -226,7 +247,7 @@ module.exports = function(RED) {
             let nodeTableName = n.tableName;
             let nodeDocId = n.docId;
             let node = this;
-            let database = getDatabase();
+            let database = getDatabase(n);
 
             node.on("input", function(msg) {
                 console.log('AutanaDataTableDeleteNode.onMessage()');
@@ -287,7 +308,7 @@ module.exports = function(RED) {
             let databaseName = n.databaseName;
             let nodeTableName = n.tableName;
             let node = this;
-            let database = getDatabase();
+            let database = getDatabase(n);
 
             node.on("input", function(msg) {
                 console.log('AutanaDataTableReadSchemaNode.onMessage()');
@@ -347,7 +368,7 @@ module.exports = function(RED) {
             let databaseName = n.databaseName;
             let nodeTableName = n.tableName;
             let node = this;
-            let database = getDatabase();
+            let database = getDatabase(n);
 
             node.on("input", function(msg) {
                 console.log('AutanaDataTableListTablesNode.onMessage()');
@@ -413,7 +434,7 @@ module.exports = function(RED) {
             let nodeTableName = n.tableName;
             let nodeSkipExists = n.skipExists;
             let node = this;
-            let database = getDatabase();
+            let database = getDatabase(n);
 
             node.on("input", function(msg) {
                 console.log('AutanaDataTableCreateTable.onMessage()');
@@ -502,7 +523,7 @@ module.exports = function(RED) {
             let nodeTableName = n.tableName;
             let nodeSkipNotFound = n.skipNotFound;
             let node = this;
-            let database = getDatabase();
+            let database = getDatabase(n);
 
             node.on("input", function(msg) {
                 console.log('AutanaDataTableDeleteTable.onMessage()');
@@ -571,6 +592,39 @@ module.exports = function(RED) {
             console.error(error);
         }
     }
+
+    class AppwriteClientParams {
+        constructor(project, endpoint, apiKey) {
+          this.project = project;
+          this.endpoint = endpoint;
+          this.apiKey = apiKey;
+          Object.freeze(this);
+        }
+      }
+
+    function AppwriteSdkConfig(n) {
+        //console.log('creating AppwriteSdkConfig node...');
+        //console.log(JSON.stringify(n));
+        RED.nodes.createNode(this, n);
+        //console.log(JSON.stringify(this));
+        var node = this;
+       
+        if (n.endpoint &&
+            n.project && 
+            n.apikey) {
+            this.params = new AppwriteClientParams(n.project, n.endpoint, n.apikey);
+            //console.log('AppwriteSdkConfig setup successfully');
+        } else {
+            node.warn(RED._("appwrite.warn.incomplete-config"));
+            console.warn(RED._("appwrite.warn.incomplete-config"));
+        }
+    }
+
+    RED.nodes.registerType("appwrite-config", AppwriteSdkConfig, {
+        endpoint: { type:"text" },
+        project: { type:"text" },
+        apikey: { type:"text" }
+    });
     
     RED.nodes.registerType("read table", AutanaDataTableReadNode);
     RED.nodes.registerType("insert row", AutanaDataTableInsertNode);

@@ -17,6 +17,7 @@ function sut() {
     return {
         id: common.sutNodeId,
         type: "delete row",
+        appwriteConfig: common.appwriteConfigNodeId,
         databaseName: database,
         tableName: table,
         docId: null,
@@ -25,6 +26,7 @@ function sut() {
 }
 
 var testFlow = [
+    common.appWriteConfigNode(),
     common.createTestTableNode(common.initNodeId, database, table, [addAgeColumnNodeId]), 
     common.addAgeColumnNode(addAgeColumnNodeId, database, table, [common.helperMessageSetupNodeId]), 
     common.helperMessageSetupNode([insertRowNodeId]),
@@ -40,7 +42,7 @@ describe("testing delete document node", function () {
     common.configureTestSuite(this, helper);
 
     it("delete document test", function (done) {
-        this.timeout(0);
+        this.timeout(5000);
         helper.load(
             autanaDataTablesNode,
             testFlow,

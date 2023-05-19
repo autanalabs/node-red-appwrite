@@ -659,11 +659,11 @@ module.exports = function(RED) {
         columns.DeleteColumn.createNode(RED, this, n);
     });
 
-    RED.nodes.registerType("create Index", function (n) {
+    RED.nodes.registerType("com.autana.createIndex", function (n) {
         indexes.CreateIndex.createNode(RED, this, n);
     });
 
-    RED.nodes.registerType("delete Index", function (n) {
+    RED.nodes.registerType("com.autana.deleteIndex", function (n) {
         indexes.DeleteIndex.createNode(RED, this, n);
     });
     

@@ -3,6 +3,7 @@
   "version": "0.0.11",
   "description": "Node-RED connector for appwrite",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "node-appwrite": "^8.1.0"
   },
   "engines": {
@@ -30,8 +31,6 @@
   },
   "homepage": "https://github.com/autanalabs/node-red-appwrite/tree/master#readme",
   "main": "appwrite.js",
-
-
   "scripts": {
     "test": "mocha --recursive test/",
     "test2": "mocha test/tables/ && mocha test/indexes/ && mocha test/columns/ && mocha test/documents/",
@@ -39,11 +38,8 @@
     "test_indexes": "mocha test/indexes/",
     "test_columns": "mocha test/columns/",
     "test_documents": "mocha test/documents/",
-    "testx": "mocha test/documents/read-documents"
-
+    "testx": "mocha test/documents/read-documents -r dotenv/config"
   },
-
-
   "devDependencies": {
     "mocha": "^10.2.0",
     "node-red": "^2.2.2",

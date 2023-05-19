@@ -12,7 +12,7 @@ helper.init(require.resolve("node-red"));
 function sut() {
     return {
         id: common.sutNodeId,
-        type: "delete Index",
+        type: "com.autana.deleteIndex",
         appwriteConfig: common.appwriteConfigNodeId,
         databaseName: database,
         tableName: table,

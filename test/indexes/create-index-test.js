@@ -11,7 +11,7 @@ helper.init(require.resolve("node-red"));
 function sut() {
     return {
         id: common.sutNodeId,
-        type: "create Index",
+        type: "com.autana.createIndex",
         appwriteConfig: common.appwriteConfigNodeId,
         databaseName: database,
         tableName: table,

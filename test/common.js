@@ -19,9 +19,9 @@ function appWriteConfigNode() {
     return { 
         id: appwriteConfigNodeId,
         type: "appwrite-config",
-        endpoint: "https://cloud.appwrite.io/v1",
-        project: "autana",
-        apikey: "9e49d48d5914598f3d9ade48d058ee1af3e04655793bcab0dca7f0bb5ca0b707b6346d6d9ef5ec2a09de2275c95af95b908a2af3c4d3d3bf508b59ae505c6b3cd45fb5a58f5b43f243fcefded0716269da00d6ca4a6e5400fc926afc8916f4223d55ffbe8842ca3045cd4188dea301ba6c5ba88760e2e5731c274167d28e25b1"
+        endpoint: process.env.TEST_APPWRITE_ENDPOINT,
+        project: process.env.TEST_APPWRITE_PROJECT_ID,
+        apikey: process.env.TEST_APPWRITE_APIKEY
     };
 }
 
@@ -126,7 +126,7 @@ function addIntegerColumnNode(nodeId, database, table, name, nextNode) {
 function addAgeIndexNode(nodeId, database, table, nextNode) {
     return {
         id: nodeId,
-        type: "create Index",
+        type: "com.autana.createIndex",
         appwriteConfig: appwriteConfigNodeId,
         databaseName: database,
         tableName: table,

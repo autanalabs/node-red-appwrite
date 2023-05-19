@@ -3,7 +3,7 @@ const should = require("should");
 const helper = require("node-red-node-test-helper");
 const autanaDataTablesNode = require("../../appwrite.js");
 const database = "prueba";
-const table = 'manolo5';
+const table = 'manolo4';
 const addAgeColumnNodeId = "add-age-column";
 
 helper.init(require.resolve("node-red"));

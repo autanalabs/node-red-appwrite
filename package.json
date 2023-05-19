@@ -34,9 +34,10 @@
 
   "scripts": {
     "test": "mocha --recursive test/",
+    "test2": "mocha test/tables/ && mocha test/indexes/ && mocha test/columns/ && mocha test/documents/",
+    "test_tables": "mocha test/tables/",
     "test_indexes": "mocha test/indexes/",
     "test_columns": "mocha test/columns/",
-    "test_tables": "mocha test/tables/",
     "test_documents": "mocha test/documents/"
 
   },

@@ -1,31 +1,50 @@
 {
-    "name": "node-red-contrib-appwrite",
-    "version": "0.0.11",
-    "description": "A Node-RED node to wrap appwrite sdk operations.",
-    "dependencies": {
-        "node-appwrite": "^5.1.0"
-    },
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/autanalabs/node-red-appwrite.git#master"
-    },
-    "license": "Apache-2.0",
-    "keywords": [
-        "node-red",
-        "appwrite"
-    ],
-    "node-red": {
-        "nodes": {
-            "appwrite": "appwrite.js"
-        }
-    },
-    "author": "Gilbert Gonzalez <gb@autanalabs.com> (http://autanalabs.com)",
-    "bugs": {
-      "url": "https://github.com/autanalabs/node-red-appwrite/issues"
-    },
-    "homepage": "https://github.com/autanalabs/node-red-appwrite/tree/master#readme",
-    "main": "appwrite.js",
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
+  "name": "node-red-contrib-appwrite",
+  "version": "0.0.11",
+  "description": "Node-RED connector for appwrite",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "node-appwrite": "^8.1.0"
+  },
+  "engines": {
+    "node": ">=17.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/autanalabs/node-red-appwrite.git#master"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "node-red",
+    "appwrite",
+    "autana"
+  ],
+  "node-red": {
+    "version": ">=2.2.0",
+    "nodes": {
+      "appwrite": "appwrite.js"
     }
+  },
+  "author": "Gilbert Gonzalez <gb@autanalabs.com> (http://autanalabs.com)",
+  "bugs": {
+    "url": "https://github.com/autanalabs/node-red-appwrite/issues"
+  },
+  "homepage": "https://github.com/autanalabs/node-red-appwrite/tree/master#readme",
+  "main": "appwrite.js",
+  "scripts": {
+    "test": "mocha --recursive test/",
+    "test2": "mocha test/tables/ && mocha test/indexes/ && mocha test/columns/ && mocha test/documents/",
+    "test_tables": "mocha test/tables/",
+    "test_indexes": "mocha test/indexes/",
+    "test_columns": "mocha test/columns/",
+    "test_documents": "mocha test/documents/",
+    "testx": "mocha test/documents/read-documents -r dotenv/config"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "node-red": "^2.2.2",
+    "node-red-node-test-helper": "^0.3.0",
+    "should": "^13.2.3",
+    "uuid": "^8.3.2"
+  }
 }

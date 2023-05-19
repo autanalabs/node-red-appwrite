@@ -1,0 +1,261 @@
+[
+    {
+        "id": "2a70a13b44adf169",
+        "type": "tab",
+        "label": "Flow 4",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c06b01c5712fe6cf",
+        "type": "debug",
+        "z": "2a70a13b44adf169",
+        "name": "debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "3ad0bac6eb4f312e",
+        "type": "inject",
+        "z": "2a70a13b44adf169",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 80,
+        "wires": [
+            [
+                "ee0d2ccf54f9e67e"
+            ]
+        ]
+    },
+    {
+        "id": "ee0d2ccf54f9e67e",
+        "type": "com.autana.listTables",
+        "z": "2a70a13b44adf169",
+        "appwriteConfig": "",
+        "databaseName": "DATABASE_ID",
+        "tableName": "",
+        "name": "",
+        "x": 300,
+        "y": 80,
+        "wires": [
+            [
+                "c06b01c5712fe6cf"
+            ]
+        ]
+    },
+    {
+        "id": "d1666dafd956a57a",
+        "type": "debug",
+        "z": "2a70a13b44adf169",
+        "name": "debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "ebcd64d772e00e7f",
+        "type": "inject",
+        "z": "2a70a13b44adf169",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 160,
+        "wires": [
+            [
+                "6009d49c0f089764"
+            ]
+        ]
+    },
+    {
+        "id": "6009d49c0f089764",
+        "type": "com.autana.readSchema",
+        "z": "2a70a13b44adf169",
+        "appwriteConfig": "",
+        "databaseName": "DATABASE_ID",
+        "tableName": "People",
+        "name": "",
+        "x": 310,
+        "y": 160,
+        "wires": [
+            [
+                "d1666dafd956a57a"
+            ]
+        ]
+    },
+    {
+        "id": "0021863bcf96d3a1",
+        "type": "debug",
+        "z": "2a70a13b44adf169",
+        "name": "debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "7533b8f51de78dba",
+        "type": "inject",
+        "z": "2a70a13b44adf169",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 240,
+        "wires": [
+            [
+                "422eca379b894afd"
+            ]
+        ]
+    },
+    {
+        "id": "0369f89f76b13a6c",
+        "type": "debug",
+        "z": "2a70a13b44adf169",
+        "name": "debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "3e47ef7798e6962b",
+        "type": "inject",
+        "z": "2a70a13b44adf169",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 300,
+        "wires": [
+            [
+                "fd6131b33111bea2"
+            ]
+        ]
+    },
+    {
+        "id": "422eca379b894afd",
+        "type": "com.autana.deleteColumn",
+        "z": "2a70a13b44adf169",
+        "appwriteConfig": "",
+        "databaseName": "DATABASE_ID",
+        "tableName": "People",
+        "key": "age",
+        "skipNotFound": true,
+        "x": 310,
+        "y": 240,
+        "wires": [
+            [
+                "0021863bcf96d3a1"
+            ]
+        ]
+    },
+    {
+        "id": "fd6131b33111bea2",
+        "type": "com.autana.deleteIndex",
+        "z": "2a70a13b44adf169",
+        "appwriteConfig": "",
+        "databaseName": "DATABASE_ID",
+        "tableName": "People",
+        "indexName": "ix_age",
+        "skipNotFound": true,
+        "name": "",
+        "x": 310,
+        "y": 300,
+        "wires": [
+            [
+                "0369f89f76b13a6c"
+            ]
+        ]
+    }
+]

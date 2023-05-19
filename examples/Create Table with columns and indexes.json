@@ -1,0 +1,205 @@
+[
+    {
+        "id": "c9ee3e79a28382da",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "29ead99068e7b787",
+        "type": "com.autana.createTable",
+        "z": "c9ee3e79a28382da",
+        "appwriteConfig": "",
+        "databaseName": "DATABASE_ID",
+        "tableName": "People",
+        "skipExists": true,
+        "name": "",
+        "x": 290,
+        "y": 100,
+        "wires": [
+            [
+                "2ffb909a8c467a89"
+            ]
+        ]
+    },
+    {
+        "id": "a56c71f8feb4b462",
+        "type": "inject",
+        "z": "c9ee3e79a28382da",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 40,
+        "wires": [
+            [
+                "29ead99068e7b787"
+            ]
+        ]
+    },
+    {
+        "id": "2ffb909a8c467a89",
+        "type": "com.autana.StringColumn",
+        "z": "c9ee3e79a28382da",
+        "appwriteConfig": "",
+        "databaseName": "",
+        "tableName": "",
+        "key": "name",
+        "size": "50",
+        "required": true,
+        "defaultValue": "",
+        "isArray": false,
+        "skipExists": true,
+        "name": "",
+        "x": 360,
+        "y": 180,
+        "wires": [
+            [
+                "ff6265c7ee504950"
+            ]
+        ]
+    },
+    {
+        "id": "ff6265c7ee504950",
+        "type": "com.autana.StringColumn",
+        "z": "c9ee3e79a28382da",
+        "appwriteConfig": "",
+        "databaseName": "",
+        "tableName": "",
+        "key": "lastName",
+        "size": "50",
+        "required": true,
+        "defaultValue": "",
+        "isArray": false,
+        "skipExists": true,
+        "name": "",
+        "x": 370,
+        "y": 240,
+        "wires": [
+            [
+                "a5e560b814e99398"
+            ]
+        ]
+    },
+    {
+        "id": "a5e560b814e99398",
+        "type": "com.autana.IntegerColumn",
+        "z": "c9ee3e79a28382da",
+        "appwriteConfig": "",
+        "databaseName": "",
+        "tableName": "",
+        "key": "age",
+        "min": "",
+        "max": "",
+        "required": false,
+        "defaultValue": "",
+        "isArray": false,
+        "skipExists": true,
+        "name": "",
+        "x": 350,
+        "y": 300,
+        "wires": [
+            [
+                "c5065d8d95ec9cbc"
+            ]
+        ]
+    },
+    {
+        "id": "c5065d8d95ec9cbc",
+        "type": "com.autana.FloatColumn",
+        "z": "c9ee3e79a28382da",
+        "appwriteConfig": "",
+        "databaseName": "",
+        "tableName": "",
+        "key": "rate",
+        "min": "",
+        "max": "",
+        "required": false,
+        "defaultValue": "",
+        "isArray": false,
+        "skipExists": true,
+        "name": "",
+        "x": 350,
+        "y": 360,
+        "wires": [
+            [
+                "25ac7a8c2dc02203"
+            ]
+        ]
+    },
+    {
+        "id": "25ac7a8c2dc02203",
+        "type": "com.autana.BooleanColumn",
+        "z": "c9ee3e79a28382da",
+        "appwriteConfig": "",
+        "databaseName": "",
+        "tableName": "",
+        "key": "isAdmin",
+        "required": false,
+        "defaultValue": "",
+        "isArray": false,
+        "skipExists": true,
+        "name": "",
+        "x": 370,
+        "y": 440,
+        "wires": [
+            [
+                "5d8b711030cca90f"
+            ]
+        ]
+    },
+    {
+        "id": "5d8b711030cca90f",
+        "type": "com.autana.createIndex",
+        "z": "c9ee3e79a28382da",
+        "appwriteConfig": "",
+        "databaseName": "",
+        "tableName": "",
+        "indexName": "ix_age",
+        "indexType": "key",
+        "columns": "age",
+        "orders": "ASC",
+        "skipExists": true,
+        "name": "",
+        "x": 330,
+        "y": 540,
+        "wires": [
+            [
+                "d4628593188a6c48"
+            ]
+        ]
+    },
+    {
+        "id": "d4628593188a6c48",
+        "type": "debug",
+        "z": "c9ee3e79a28382da",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 540,
+        "wires": []
+    }
+]

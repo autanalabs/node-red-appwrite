@@ -1,0 +1,356 @@
+[
+    {
+        "id": "6c45847476728b03",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "4af93fdb80c04fc1",
+        "type": "inject",
+        "z": "6c45847476728b03",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 80,
+        "wires": [
+            [
+                "df1a9a73c0961443"
+            ]
+        ]
+    },
+    {
+        "id": "2a21b038aa8a6f4b",
+        "type": "debug",
+        "z": "6c45847476728b03",
+        "name": "documents",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.documents",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "b3435e1754908d94",
+        "type": "inject",
+        "z": "6c45847476728b03",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 160,
+        "wires": [
+            [
+                "119f6de88c96c297"
+            ]
+        ]
+    },
+    {
+        "id": "304e6ac2568a4f6b",
+        "type": "debug",
+        "z": "6c45847476728b03",
+        "name": "debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "119f6de88c96c297",
+        "type": "change",
+        "z": "6c45847476728b03",
+        "name": "set payload JSON",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"age\":21}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 160,
+        "wires": [
+            [
+                "c93b1c01c4d5c18a"
+            ]
+        ]
+    },
+    {
+        "id": "df1a9a73c0961443",
+        "type": "com.autana.readTable",
+        "z": "6c45847476728b03",
+        "appwriteConfig": "",
+        "databaseName": "DATABASE_ID",
+        "tableName": "People",
+        "name": "",
+        "query": "equal(\"age\", 21)",
+        "x": 350,
+        "y": 80,
+        "wires": [
+            [
+                "2a21b038aa8a6f4b"
+            ]
+        ]
+    },
+    {
+        "id": "c93b1c01c4d5c18a",
+        "type": "com.autana.insertRow",
+        "z": "6c45847476728b03",
+        "appwriteConfig": "",
+        "databaseName": "DATABASE_ID",
+        "tableName": "People",
+        "name": "",
+        "docId": "",
+        "x": 330,
+        "y": 240,
+        "wires": [
+            [
+                "304e6ac2568a4f6b"
+            ]
+        ]
+    },
+    {
+        "id": "25e9393b8598864b",
+        "type": "inject",
+        "z": "6c45847476728b03",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 340,
+        "wires": [
+            [
+                "02ad4559a37783a2"
+            ]
+        ]
+    },
+    {
+        "id": "cc01ca7e6edae6b8",
+        "type": "debug",
+        "z": "6c45847476728b03",
+        "name": "debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "02ad4559a37783a2",
+        "type": "change",
+        "z": "6c45847476728b03",
+        "name": "set payload JSON",
+        "rules": [
+            {
+                "t": "set",
+                "p": "docId",
+                "pt": "msg",
+                "to": "1234",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"age\":22}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 340,
+        "wires": [
+            [
+                "e7472209550035a9"
+            ]
+        ]
+    },
+    {
+        "id": "e7472209550035a9",
+        "type": "com.autana.updateRow",
+        "z": "6c45847476728b03",
+        "appwriteConfig": "",
+        "databaseName": "DATABASE_ID",
+        "tableName": "People",
+        "name": "",
+        "docId": "",
+        "x": 340,
+        "y": 420,
+        "wires": [
+            [
+                "cc01ca7e6edae6b8"
+            ]
+        ]
+    },
+    {
+        "id": "94ce87f30d89e649",
+        "type": "inject",
+        "z": "6c45847476728b03",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 500,
+        "wires": [
+            [
+                "c8069ac59fb1f127"
+            ]
+        ]
+    },
+    {
+        "id": "3f0649f90c7cc395",
+        "type": "debug",
+        "z": "6c45847476728b03",
+        "name": "debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "c8069ac59fb1f127",
+        "type": "change",
+        "z": "6c45847476728b03",
+        "name": "set payload JSON",
+        "rules": [
+            {
+                "t": "set",
+                "p": "docId",
+                "pt": "msg",
+                "to": "1234",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"age\":22}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 500,
+        "wires": [
+            [
+                "c885f1e4c321a5a0"
+            ]
+        ]
+    },
+    {
+        "id": "c885f1e4c321a5a0",
+        "type": "com.autana.deleteRow",
+        "z": "6c45847476728b03",
+        "databaseName": "",
+        "tableName": "",
+        "name": "",
+        "docId": "",
+        "x": 370,
+        "y": 580,
+        "wires": [
+            [
+                "3f0649f90c7cc395"
+            ]
+        ]
+    }
+]

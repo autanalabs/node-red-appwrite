@@ -4,6 +4,7 @@ const sutNodeId = "sut";
 const helperNodeId = "helper-node"
 const helperDebugNodeId = "helper-debug-node"
 const helperAsserterNodeId = "helper-asserter-node"
+const helperMessageSetupNodeId = "helper-message-setup-node"
 const should = require("should");
 const mainNodes = require("../appwrite.js");
 
@@ -38,6 +39,14 @@ function helperDebugNode(nextNode) {
 function helperAssertNode(nextNode) {
     return { 
         id: helperAsserterNodeId, 
+        type: "helper",
+        wires: [nextNode], 
+    };
+}
+
+function helperMessageSetupNode(nextNode) {
+    return { 
+        id: helperMessageSetupNodeId, 
         type: "helper",
         wires: [nextNode], 
     };
@@ -169,10 +178,25 @@ function performAsserts(helper, assertionCallback) {
     }
  }
 
+ function onMessageSetup(helper, messageSetupFunction) {
+    var helperMessageSetupNode = helper.getNode(helperMessageSetupNodeId);
+    if (helperMessageSetupNode != null) {
+        helperMessageSetupNode.on("input", function (msg) {
+            console.debug("=== MESSAGE SETUP ===");
+            messageSetupFunction(msg)
+            .then(
+                (changedMsg) => helperMessageSetupNode.send(changedMsg),
+                (err) =>  helperMessageSetupNode.error(err)
+            );
+        });
+    }
+ }
+
 module.exports = { helperNode, createTestTableNode, addAgeColumnNode,
     configureTestSuite, helperNodeId, initNodeId, sutNodeId,
     getAndAssertMainNodes, getAndAssertNodesById, 
     configureOnCallErrorCallback, addAgeIndexNode, addIntegerColumnNode,
     helperInitNode, testNodes, helperDebugNode, helperDebugNodeId,
-    helperAssertNode, helperAsserterNodeId, performAsserts
+    helperAssertNode, helperAsserterNodeId, performAsserts,
+    helperMessageSetupNodeId, helperMessageSetupNode, onMessageSetup
 };

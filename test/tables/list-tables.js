@@ -25,8 +25,10 @@ var testFlow = [
     common.createTestTableNode(common.initNodeId, database, table, [anotherTableNodeId]),
     common.createTestTableNode(anotherTableNodeId, database, anotherTable, [common.sutNodeId]), 
     common.helperNode(), 
-    common.helperDebugNode([common.helperNodeId]),
-    sut()
+    common.helperDebugNode([common.helperAsserterNodeId]),
+    sut(),
+    common.helperAssertNode([common.helperNodeId]
+    )
 ];
 
 describe("testing list-tables node", function () {
@@ -34,7 +36,7 @@ describe("testing list-tables node", function () {
     common.configureTestSuite(this, helper);
 
     it("list tables test", function (done) {
-        this.timeout(0);
+        this.timeout(5000);
         helper.load(
             autanaDataTablesNode,
             testFlow,
@@ -42,9 +44,24 @@ describe("testing list-tables node", function () {
             function () {
                 var [initNode, helperNode, sutNode] = common.getAndAssertMainNodes(done, helper);
                 var anotherTableNode = common.getAndAssertNodesById(helper, anotherTableNodeId);
+                var helperAsserterNode = common.getAndAssertNodesById(helper, common.helperAsserterNodeId);
+                
                 common.configureOnCallErrorCallback(done, [
-                    initNode, helperNode, sutNode, anotherTableNode
+                    initNode, helperNode, sutNode, anotherTableNode, helperAsserterNode
                 ]);
+
+                common.performAsserts(helper, async function(msg) {
+                    should(msg).not.be.null();
+                    should(msg.payload).not.be.null();
+                    should(msg.payload.total).greaterThanOrEqual(2);
+                    should(msg.payload.tables).not.be.null();
+
+                    firstTable = msg.payload.tables.filter(t => t.name == table);
+                    should(firstTable).not.be.empty();
+                    
+                    secondTable = msg.payload.tables.filter(t => t.name == anotherTable);
+                    should(secondTable).not.be.empty();
+                });
                 
                 initNode.receive({});
             }

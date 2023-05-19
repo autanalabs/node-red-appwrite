@@ -3,6 +3,7 @@ const initNodeId = "init";
 const sutNodeId = "sut";
 const helperNodeId = "helper-node"
 const helperDebugNodeId = "helper-debug-node"
+const helperAsserterNodeId = "helper-asserter-node"
 const should = require("should");
 const mainNodes = require("../appwrite.js");
 
@@ -29,6 +30,14 @@ function helperNode() {
 function helperDebugNode(nextNode) {
     return { 
         id: helperDebugNodeId, 
+        type: "helper",
+        wires: [nextNode], 
+    };
+}
+
+function helperAssertNode(nextNode) {
+    return { 
+        id: helperAsserterNodeId, 
         type: "helper",
         wires: [nextNode], 
     };
@@ -138,7 +147,7 @@ function getAndAssertMainNodes(done, helper) {
     var helperDebugNode = helper.getNode(helperDebugNodeId);
     if (helperDebugNode != null) {
         helperDebugNode.on("input", function (msg) {
-            console.log("==DEBUG msg=" + JSON.stringify(msg, null, 2));
+            console.log("==DEBUG msg=" + JSON.stringify(msg, null, 2))
             helperDebugNode.send(msg);
         });
     }
@@ -146,9 +155,24 @@ function getAndAssertMainNodes(done, helper) {
     return [initNode, helperNode, sutNode];
 }
 
+function performAsserts(helper, assertionCallback) {
+    var helperAsserterNode = helper.getNode(helperAsserterNodeId);
+    if (helperAsserterNode != null) {
+        helperAsserterNode.on("input", function (msg) {
+            console.debug("=== ASSERTS ===");
+            assertionCallback(msg)
+            .then(
+                () => helperAsserterNode.send(msg),
+                (err) =>  helperAsserterNode.error(err)
+            );
+        });
+    }
+ }
+
 module.exports = { helperNode, createTestTableNode, addAgeColumnNode,
     configureTestSuite, helperNodeId, initNodeId, sutNodeId,
     getAndAssertMainNodes, getAndAssertNodesById, 
     configureOnCallErrorCallback, addAgeIndexNode, addIntegerColumnNode,
-    helperInitNode, testNodes, helperDebugNode, helperDebugNodeId
+    helperInitNode, testNodes, helperDebugNode, helperDebugNodeId,
+    helperAssertNode, helperAsserterNodeId, performAsserts
 };

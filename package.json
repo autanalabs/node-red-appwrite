@@ -38,7 +38,8 @@
     "test_tables": "mocha test/tables/",
     "test_indexes": "mocha test/indexes/",
     "test_columns": "mocha test/columns/",
-    "test_documents": "mocha test/documents/"
+    "test_documents": "mocha test/documents/",
+    "testx": "mocha test/documents/update-document"
 
   },
 

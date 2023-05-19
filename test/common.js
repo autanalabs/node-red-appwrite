@@ -60,6 +60,25 @@ function helperInitNode(nextNode) {
     };
 }
 
+function helperFunctionNode(nodeId, nextNode) {
+    return { 
+        id: nodeId, 
+        type: "helper",
+        wires: [nextNode], 
+    };
+}
+
+function insertRowNode(nodeId, database, table, nextNode) {
+    return {
+        id: nodeId,
+        type: "insert row",
+        databaseName: database,
+        tableName: table,
+        docId: null,
+        wires: [nextNode],
+    };
+}
+
 function createTestTableNode(nodeId, database, table, nextNode) {
 
     return {
@@ -198,5 +217,6 @@ module.exports = { helperNode, createTestTableNode, addAgeColumnNode,
     configureOnCallErrorCallback, addAgeIndexNode, addIntegerColumnNode,
     helperInitNode, testNodes, helperDebugNode, helperDebugNodeId,
     helperAssertNode, helperAsserterNodeId, performAsserts,
-    helperMessageSetupNodeId, helperMessageSetupNode, onMessageSetup
+    helperMessageSetupNodeId, helperMessageSetupNode, onMessageSetup,
+    insertRowNode, helperFunctionNode
 };

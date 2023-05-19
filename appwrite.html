@@ -11,6 +11,10 @@
         <input type="text" id="node-input-appwriteConfig">
     </div>
     <div class="form-row">
+        <label for="node-input-databaseName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.databaseName"></span></label>
+        <input type="text" id="node-input-databaseName" data-i18n="[placeholder]autanaCloud.placeholder.databaseName">
+    </div>
+    <div class="form-row">
         <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
         <input type="text" id="node-input-tableName" data-i18n="[placeholder]autanaCloud.placeholder.tableName">
     </div>
@@ -27,23 +31,24 @@
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('read table',{
-        category: 'Appwrite',
-        color:"#FFFFFF",
+    RED.nodes.registerType('read table', {
+        category: 'Appwrite Database',
+        color: "#F0B4C5",
         defaults: {
-            appwriteConfig: {type:"appwrite-config", required:true},
-            tableName: {value:""},
-            name: {value:""},
-            query: {value:""}
+            appwriteConfig: { type: "appwrite-config", required: true },
+            databaseName: { value: "" },
+            tableName: { value: "" },
+            name: { value: "" },
+            query: { value: "" }
         },
-        inputs:1,
-        outputs:1,
-        icon: "autana.png",
+        inputs: 1,
+        outputs: 1,
+        icon: "appwrite.png",
         align: "left",
-        label: function() {
+        label: function () {
             return this.name ? this.name : this.tableName ? "read " + this.tableName : "read table";
         },
-        oneditprepare: function() {
+        oneditprepare: function () {
 
         }
     });
@@ -55,6 +60,10 @@
         <input type="text" id="node-input-appwriteConfig">
     </div>
     <div class="form-row">
+        <label for="node-input-databaseName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.databaseName"></span></label>
+        <input type="text" id="node-input-databaseName" data-i18n="[placeholder]autanaCloud.placeholder.databaseName">
+    </div>
+    <div class="form-row">
         <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
         <input type="text" id="node-input-tableName" data-i18n="[placeholder]autanaCloud.placeholder.tableName">
     </div>
@@ -71,23 +80,24 @@
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('insert row',{
-        category: 'Appwrite',
-        color:"#FFFFFF",
+    RED.nodes.registerType('insert row', {
+        category: 'Appwrite Database',
+        color: "#F0B4C5",
         defaults: {
-            appwriteConfig: {type:"appwrite-config", required:true},
-            tableName: {value:""},
-            name: {value:""},
-            docId: {value:""}
+            appwriteConfig: { type: "appwrite-config", required: true },
+            databaseName: { value: "" },
+            tableName: { value: "" },
+            name: { value: "" },
+            docId: { value: "" }
         },
-        inputs:1,
-        outputs:1,
-        icon: "autana.png",
+        inputs: 1,
+        outputs: 1,
+        icon: "appwrite.png",
         align: "left",
-        label: function() {
+        label: function () {
             return this.name ? this.name : this.tableName ? "insert " + this.tableName : "insert row";
         },
-        oneditprepare: function() {
+        oneditprepare: function () {
 
         }
     });
@@ -99,6 +109,10 @@
         <input type="text" id="node-input-appwriteConfig">
     </div>
     <div class="form-row">
+        <label for="node-input-databaseName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.databaseName"></span></label>
+        <input type="text" id="node-input-databaseName" data-i18n="[placeholder]autanaCloud.placeholder.databaseName">
+    </div>
+    <div class="form-row">
         <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
         <input type="text" id="node-input-tableName" data-i18n="[placeholder]autanaCloud.placeholder.tableName">
     </div>
@@ -115,23 +129,24 @@
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('update row',{
-        category: 'Appwrite',
-        color:"#FFFFFF",
+    RED.nodes.registerType('update row', {
+        category: 'Appwrite Database',
+        color: "#F0B4C5",
         defaults: {
-            appwriteConfig: {type:"appwrite-config", required:true},
-            tableName: {value:""},
-            name: {value:""},
-            docId: {value:""}
+            appwriteConfig: { type: "appwrite-config", required: true },
+            databaseName: { value: "" },
+            tableName: { value: "" },
+            name: { value: "" },
+            docId: { value: "" }
         },
-        inputs:1,
-        outputs:1,
-        icon: "autana.png",
+        inputs: 1,
+        outputs: 1,
+        icon: "appwrite.png",
         align: "left",
-        label: function() {
+        label: function () {
             return this.name ? this.name : this.tableName ? "update " + this.tableName : "update row";
         },
-        oneditprepare: function() {
+        oneditprepare: function () {
 
         }
     });
@@ -143,6 +158,10 @@
         <input type="text" id="node-input-appwriteConfig">
     </div>
     <div class="form-row">
+        <label for="node-input-databaseName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.databaseName"></span></label>
+        <input type="text" id="node-input-databaseName" data-i18n="[placeholder]autanaCloud.placeholder.databaseName">
+    </div>
+    <div class="form-row">
         <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
         <input type="text" id="node-input-tableName" data-i18n="[placeholder]autanaCloud.placeholder.tableName">
     </div>
@@ -159,23 +178,24 @@
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('delete row',{
-        category: 'Appwrite',
-        color:"#FFFFFF",
+    RED.nodes.registerType('delete row', {
+        category: 'Appwrite Database',
+        color: "#F0B4C5",
         defaults: {
-            appwriteConfig: {type:"appwrite-config", required:true},
-            tableName: {value:""},
-            name: {value:""},
-            docId: {value:""}
+            appwriteConfig: { type: "appwrite-config", required: true },
+            databaseName: { value: "" },
+            tableName: { value: "" },
+            name: { value: "" },
+            docId: { value: "" }
         },
-        inputs:1,
-        outputs:1,
-        icon: "autana.png",
+        inputs: 1,
+        outputs: 1,
+        icon: "appwrite.png",
         align: "left",
-        label: function() {
+        label: function () {
             return this.name ? this.name : this.tableName ? "delete " + this.tableName : "delete row";
         },
-        oneditprepare: function() {
+        oneditprepare: function () {
 
         }
     });
@@ -185,6 +205,10 @@
     <div class="form-row">
         <label for="node-input-appwriteConfig"><i class="fa fa-user"></i> <span data-i18n="autanaCloud.label.config"></span></label>
         <input type="text" id="node-input-appwriteConfig">
+    </div>
+    <div class="form-row">
+        <label for="node-input-databaseName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.databaseName"></span></label>
+        <input type="text" id="node-input-databaseName" data-i18n="[placeholder]autanaCloud.placeholder.databaseName">
     </div>
     <div class="form-row">
         <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
@@ -198,22 +222,23 @@
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('read schema',{
-        category: 'Appwrite',
-        color:"#FFFFFF",
+    RED.nodes.registerType('read schema', {
+        category: 'Appwrite Database',
+        color: "#F0B4C5",
         defaults: {
-            appwriteConfig: {type:"appwrite-config", required:true},
-            tableName: {value:""},
-            name: {value:""}
+            appwriteConfig: { type: "appwrite-config", required: true },
+            databaseName: { value: "" },
+            tableName: { value: "" },
+            name: { value: "" }
         },
-        inputs:1,
-        outputs:1,
-        icon: "autana.png",
+        inputs: 1,
+        outputs: 1,
+        icon: "appwrite.png",
         align: "left",
-        label: function() {
+        label: function () {
             return this.name ? this.name : this.tableName ? "schema of " + this.tableName : "read schema";
         },
-        oneditprepare: function() {
+        oneditprepare: function () {
 
         }
     });
@@ -223,6 +248,10 @@
     <div class="form-row">
         <label for="node-input-appwriteConfig"><i class="fa fa-user"></i> <span data-i18n="autanaCloud.label.config"></span></label>
         <input type="text" id="node-input-appwriteConfig">
+    </div>
+    <div class="form-row">
+        <label for="node-input-databaseName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.databaseName"></span></label>
+        <input type="text" id="node-input-databaseName" data-i18n="[placeholder]autanaCloud.placeholder.databaseName">
     </div>
     <div class="form-row">
         <label for="node-input-tableName"><i class="fa fa-filter"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
@@ -236,22 +265,23 @@
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('list tables',{
-        category: 'Appwrite',
-        color:"#FFFFFF",
+    RED.nodes.registerType('list tables', {
+        category: 'Appwrite Database',
+        color: "#F0B4C5",
         defaults: {
-            appwriteConfig: {type:"appwrite-config", required:true},
-            tableName: {value:""},
-            name: {value:""}
+            appwriteConfig: { type: "appwrite-config", required: true },
+            databaseName: { value: "" },
+            tableName: { value: "" },
+            name: { value: "" }
         },
-        inputs:1,
-        outputs:1,
-        icon: "autana.png",
+        inputs: 1,
+        outputs: 1,
+        icon: "appwrite.png",
         align: "left",
-        label: function() {
+        label: function () {
             return this.name ? this.name : this.tableName ? "tables like " + this.tableName : "list tables";
         },
-        oneditprepare: function() {
+        oneditprepare: function () {
 
         }
     });
@@ -261,6 +291,10 @@
     <div class="form-row">
         <label for="node-input-appwriteConfig"><i class="fa fa-user"></i> <span data-i18n="autanaCloud.label.config"></span></label>
         <input type="text" id="node-input-appwriteConfig">
+    </div>
+    <div class="form-row">
+        <label for="node-input-databaseName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.databaseName"></span></label>
+        <input type="text" id="node-input-databaseName" data-i18n="[placeholder]autanaCloud.placeholder.databaseName">
     </div>
     <div class="form-row">
         <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
@@ -279,23 +313,24 @@
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('create table',{
-        category: 'Appwrite',
-        color:"#FFFFFF",
+    RED.nodes.registerType('create table', {
+        category: 'Appwrite Database',
+        color: "#F0B4C5",
         defaults: {
-            appwriteConfig: {type:"appwrite-config", required:true},
-            tableName: {value:""},
-            skipExists: {value: false},
-            name: {value:""}
+            appwriteConfig: { type: "appwrite-config", required: true },
+            databaseName: { value: "" },
+            tableName: { value: "" },
+            skipExists: { value: false },
+            name: { value: "" }
         },
-        inputs:1,
-        outputs:1,
-        icon: "autana.png",
+        inputs: 1,
+        outputs: 1,
+        icon: "appwrite.png",
         align: "left",
-        label: function() {
+        label: function () {
             return this.name ? this.name : this.tableName ? "create table " + this.tableName : "create table";
         },
-        oneditprepare: function() {
+        oneditprepare: function () {
 
         }
     });
@@ -305,6 +340,10 @@
     <div class="form-row">
         <label for="node-input-appwriteConfig"><i class="fa fa-user"></i> <span data-i18n="autanaCloud.label.config"></span></label>
         <input type="text" id="node-input-appwriteConfig">
+    </div>
+    <div class="form-row">
+        <label for="node-input-databaseName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.databaseName"></span></label>
+        <input type="text" id="node-input-databaseName" data-i18n="[placeholder]autanaCloud.placeholder.databaseName">
     </div>
     <div class="form-row">
         <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
@@ -348,28 +387,29 @@
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('add String Column',{
-        category: 'Appwrite',
-        color:"#FFFFFF",
+    RED.nodes.registerType('add String Column', {
+        category: 'Appwrite Database',
+        color: "#F0B4C5",
         defaults: {
-            appwriteConfig: {type:"appwrite-config", required:true},
-            tableName: {value: ""},
-            key: {value: ""},
-            size: {value: 255},
-            required: {value: false},
-            defaultValue: {value: ""},
-            isArray: {value: false},
-            skipExists: {value: false},
-            name: {value:""}
+            appwriteConfig: { type: "appwrite-config", required: true },
+            databaseName: { value: "" },
+            tableName: { value: "" },
+            key: { value: "" },
+            size: { value: 255 },
+            required: { value: false },
+            defaultValue: { value: "" },
+            isArray: { value: false },
+            skipExists: { value: false },
+            name: { value: "" }
         },
-        inputs:1,
-        outputs:1,
-        icon: "autana.png",
+        inputs: 1,
+        outputs: 1,
+        icon: "appwrite.png",
         align: "left",
-        label: function() {
+        label: function () {
             return this.name ? this.name : this.key ? "string column " + this.key : "string column";
         },
-        oneditprepare: function() {
+        oneditprepare: function () {
 
         }
     });
@@ -381,6 +421,10 @@
         <input type="text" id="node-input-appwriteConfig">
     </div>
     <div class="form-row">
+        <label for="node-input-databaseName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.databaseName"></span></label>
+        <input type="text" id="node-input-databaseName" data-i18n="[placeholder]autanaCloud.placeholder.databaseName">
+    </div>
+    <div class="form-row">
         <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
         <input type="text" id="node-input-tableName" data-i18n="[placeholder]autanaCloud.placeholder.tableName">
     </div>
@@ -427,29 +471,30 @@
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('add Integer Column',{
-        category: 'Appwrite',
-        color:"#FFFFFF",
+    RED.nodes.registerType('add Integer Column', {
+        category: 'Appwrite Database',
+        color: "#F0B4C5",
         defaults: {
-            appwriteConfig: {type:"appwrite-config", required:true},
-            tableName: {value: ""},
-            key: {value: ""},
-            min: {value: null},
-            max: {value: null},
-            required: {value: false},
-            defaultValue: {value: ""},
-            isArray: {value: false},
-            skipExists: {value: false},
-            name: {value:""}
+            appwriteConfig: { type: "appwrite-config", required: true },
+            databaseName: { value: "" },
+            tableName: { value: "" },
+            key: { value: "" },
+            min: { value: null },
+            max: { value: null },
+            required: { value: false },
+            defaultValue: { value: "" },
+            isArray: { value: false },
+            skipExists: { value: false },
+            name: { value: "" }
         },
-        inputs:1,
-        outputs:1,
-        icon: "autana.png",
+        inputs: 1,
+        outputs: 1,
+        icon: "appwrite.png",
         align: "left",
-        label: function() {
+        label: function () {
             return this.name ? this.name : this.key ? "integer column " + this.key : "integer column";
         },
-        oneditprepare: function() {
+        oneditprepare: function () {
 
         }
     });
@@ -461,6 +506,10 @@
         <input type="text" id="node-input-appwriteConfig">
     </div>
     <div class="form-row">
+        <label for="node-input-databaseName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.databaseName"></span></label>
+        <input type="text" id="node-input-databaseName" data-i18n="[placeholder]autanaCloud.placeholder.databaseName">
+    </div>
+    <div class="form-row">
         <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
         <input type="text" id="node-input-tableName" data-i18n="[placeholder]autanaCloud.placeholder.tableName">
     </div>
@@ -507,29 +556,30 @@
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('add Float Column',{
-        category: 'Appwrite',
-        color:"#FFFFFF",
+    RED.nodes.registerType('add Float Column', {
+        category: 'Appwrite Database',
+        color: "#F0B4C5",
         defaults: {
-            appwriteConfig: {type:"appwrite-config", required:true},
-            tableName: {value: ""},
-            key: {value: ""},
-            min: {value: null},
-            max: {value: null},
-            required: {value: false},
-            defaultValue: {value: ""},
-            isArray: {value: false},
-            skipExists: {value: false},
-            name: {value:""}
+            appwriteConfig: { type: "appwrite-config", required: true },
+            databaseName: { value: "" },
+            tableName: { value: "" },
+            key: { value: "" },
+            min: { value: null },
+            max: { value: null },
+            required: { value: false },
+            defaultValue: { value: "" },
+            isArray: { value: false },
+            skipExists: { value: false },
+            name: { value: "" }
         },
-        inputs:1,
-        outputs:1,
-        icon: "autana.png",
+        inputs: 1,
+        outputs: 1,
+        icon: "appwrite.png",
         align: "left",
-        label: function() {
+        label: function () {
             return this.name ? this.name : this.key ? "float column " + this.key : "float column";
         },
-        oneditprepare: function() {
+        oneditprepare: function () {
 
         }
     });
@@ -539,6 +589,10 @@
     <div class="form-row">
         <label for="node-input-appwriteConfig"><i class="fa fa-user"></i> <span data-i18n="autanaCloud.label.config"></span></label>
         <input type="text" id="node-input-appwriteConfig">
+    </div>
+    <div class="form-row">
+        <label for="node-input-databaseName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.databaseName"></span></label>
+        <input type="text" id="node-input-databaseName" data-i18n="[placeholder]autanaCloud.placeholder.databaseName">
     </div>
     <div class="form-row">
         <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
@@ -577,27 +631,28 @@
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('add Boolean Column',{
-        category: 'Appwrite',
-        color:"#FFFFFF",
+    RED.nodes.registerType('add Boolean Column', {
+        category: 'Appwrite Database',
+        color: "#F0B4C5",
         defaults: {
-            appwriteConfig: {type:"appwrite-config", required:true},
-            tableName: {value: ""},
-            key: {value: ""},
-            required: {value: false},
-            defaultValue: {value: ""},
-            isArray: {value: false},
-            skipExists: {value: false},
-            name: {value:""}
+            appwriteConfig: { type: "appwrite-config", required: true },
+            databaseName: { value: "" },
+            tableName: { value: "" },
+            key: { value: "" },
+            required: { value: false },
+            defaultValue: { value: "" },
+            isArray: { value: false },
+            skipExists: { value: false },
+            name: { value: "" }
         },
-        inputs:1,
-        outputs:1,
-        icon: "autana.png",
+        inputs: 1,
+        outputs: 1,
+        icon: "appwrite.png",
         align: "left",
-        label: function() {
+        label: function () {
             return this.name ? this.name : this.key ? "boolean column " + this.key : "boolean column";
         },
-        oneditprepare: function() {
+        oneditprepare: function () {
 
         }
     });
@@ -607,6 +662,10 @@
     <div class="form-row">
         <label for="node-input-appwriteConfig"><i class="fa fa-user"></i> <span data-i18n="autanaCloud.label.config"></span></label>
         <input type="text" id="node-input-appwriteConfig">
+    </div>
+    <div class="form-row">
+        <label for="node-input-databaseName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.databaseName"></span></label>
+        <input type="text" id="node-input-databaseName" data-i18n="[placeholder]autanaCloud.placeholder.databaseName">
     </div>
     <div class="form-row">
         <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
@@ -630,23 +689,24 @@
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('delete Column',{
-        category: 'Appwrite',
-        color:"#FFFFFF",
+    RED.nodes.registerType('delete Column', {
+        category: 'Appwrite Database',
+        color: "#F0B4C5",
         defaults: {
-            appwriteConfig: {type:"appwrite-config", required:true},
-            tableName: {value: ""},
-            key: {value: ""},
-            skipNotFound: {value: false}
+            appwriteConfig: { type: "appwrite-config", required: true },
+            databaseName: { value: "" },
+            tableName: { value: "" },
+            key: { value: "" },
+            skipNotFound: { value: false }
         },
-        inputs:1,
-        outputs:1,
-        icon: "autana.png",
+        inputs: 1,
+        outputs: 1,
+        icon: "appwrite.png",
         align: "left",
-        label: function() {
+        label: function () {
             return this.name ? this.name : this.key ? "delete column " + this.key : "delete column";
         },
-        oneditprepare: function() {
+        oneditprepare: function () {
 
         }
     });
@@ -656,6 +716,10 @@
     <div class="form-row">
         <label for="node-input-appwriteConfig"><i class="fa fa-user"></i> <span data-i18n="autanaCloud.label.config"></span></label>
         <input type="text" id="node-input-appwriteConfig">
+    </div>
+    <div class="form-row">
+        <label for="node-input-databaseName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.databaseName"></span></label>
+        <input type="text" id="node-input-databaseName" data-i18n="[placeholder]autanaCloud.placeholder.databaseName">
     </div>
     <div class="form-row">
         <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
@@ -699,27 +763,28 @@
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('create Index',{
-        category: 'Appwrite',
-        color:"#FFFFFF",
+    RED.nodes.registerType('create Index', {
+        category: 'Appwrite Database',
+        color: "#F0B4C5",
         defaults: {
-            appwriteConfig: {type:"appwrite-config", required:true},
-            tableName: {value: ""},
-            indexName: {value: ""},
-            indexType: {value: ""},
-            columns: {value: ""},
-            orders: {value: ""},
-            skipExists: {value: false},
-            name: {value:""}
+            appwriteConfig: { type: "appwrite-config", required: true },
+            databaseName: { value: "" },
+            tableName: { value: "" },
+            indexName: { value: "" },
+            indexType: { value: "" },
+            columns: { value: "" },
+            orders: { value: "" },
+            skipExists: { value: false },
+            name: { value: "" }
         },
-        inputs:1,
-        outputs:1,
-        icon: "autana.png",
+        inputs: 1,
+        outputs: 1,
+        icon: "appwrite.png",
         align: "left",
-        label: function() {
+        label: function () {
             return this.name ? this.name : this.indexName ? "create index " + this.indexName : "create index";
         },
-        oneditprepare: function() {
+        oneditprepare: function () {
 
         }
     });
@@ -729,6 +794,10 @@
     <div class="form-row">
         <label for="node-input-appwriteConfig"><i class="fa fa-user"></i> <span data-i18n="autanaCloud.label.config"></span></label>
         <input type="text" id="node-input-appwriteConfig">
+    </div>
+    <div class="form-row">
+        <label for="node-input-databaseName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.databaseName"></span></label>
+        <input type="text" id="node-input-databaseName" data-i18n="[placeholder]autanaCloud.placeholder.databaseName">
     </div>
     <div class="form-row">
         <label for="node-input-tableName"><i class="fa fa-folder"></i> <span data-i18n="autanaCloud.label.tableName"></span></label>
@@ -752,24 +821,25 @@
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('delete Index',{
-        category: 'Appwrite',
-        color:"#FFFFFF",
+    RED.nodes.registerType('delete Index', {
+        category: 'Appwrite Database',
+        color: "#F0B4C5",
         defaults: {
-            appwriteConfig: {type:"appwrite-config", required:true},
-            tableName: {value: ""},
-            indexName: {value: ""},
-            skipNotFound: {value: false},
-            name: {value:""}
+            appwriteConfig: { type: "appwrite-config", required: true },
+            databaseName: { value: "" },
+            tableName: { value: "" },
+            indexName: { value: "" },
+            skipNotFound: { value: false },
+            name: { value: "" }
         },
-        inputs:1,
-        outputs:1,
-        icon: "autana.png",
+        inputs: 1,
+        outputs: 1,
+        icon: "appwrite.png",
         align: "left",
-        label: function() {
+        label: function () {
             return this.name ? this.name : this.indexName ? "delete index " + this.indexName : "delete index";
         },
-        oneditprepare: function() {
+        oneditprepare: function () {
 
         }
     });
@@ -794,24 +864,24 @@
 </script>
 
 <script type="text/javascript">
-(function() {
-    RED.nodes.registerType('appwrite-config',{
-        category: 'config',
-        defaults: { 
-            endpoint: {type: "text", required:true},
-            project: {type: "text", required:true},
-            apikey: {type: "text", required:true},
-        },
-        
-        label: function() {
-            var host = this.endpoint ? this.endpoint : "unknow"
-            if (this.endpoint) {
-                var p = host.indexOf("://")
-                host = host.substr(p+3).replace("/v1","");
-            }
-            return this.project ? this.project + "@" + host : "appwrite";
-        },
-        exportable: false,
-    });
-})();
+    (function () {
+        RED.nodes.registerType('appwrite-config', {
+            category: 'config',
+            defaults: {
+                endpoint: { type: "text", required: true },
+                project: { type: "text", required: true },
+                apikey: { type: "text", required: true },
+            },
+
+            label: function () {
+                var host = this.endpoint ? this.endpoint : "unknow"
+                if (this.endpoint) {
+                    var p = host.indexOf("://")
+                    host = host.substr(p + 3).replace("/v1", "");
+                }
+                return this.project ? this.project + "@" + host : "appwrite";
+            },
+            exportable: false,
+        });
+    })();
 </script>

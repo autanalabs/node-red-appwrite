@@ -1,7 +1,8 @@
 {
     "autanaCloud": {
         "label": {
-            "tableName": "Table name",
+            "databaseName": "Database Id",
+            "tableName": "Collection ID",
             "name": "Name",
             "queries": "Query",
             "docId": "Document Id",
@@ -24,7 +25,8 @@
             "config": "Client configuration"
         },
         "placeholder": {
-            "tableName": "Table name",
+            "databaseName": "Database Id",
+            "tableName": "Collection Id",
             "queries": "Filter rows by...",
             "name": "Name",
             "docId": "a value for primary key",

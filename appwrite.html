@@ -777,19 +777,19 @@
 
 <script type="text/x-red" data-template-name="appwrite-config">
     <div class="form-row">
-        <label for="node-config-input-endpoint"><i class="fa fa-bookmark"></i> <span data-i18n="appwrite.label.endpoint"></span></label>
+        <label for="node-config-input-endpoint"><i class="fa fa-bookmark"></i> <span data-i18n="autanaCloud.label.endpoint"></span></label>
         <input class="input-append-left" type="text" id="node-config-input-endpoint" style="width: 40%;" >
     </div>
     <div class="form-row">
-        <label for="node-config-input-project"><i class="fa fa-bookmark"></i> <span data-i18n="appwrite.label.project"></span></label>
+        <label for="node-config-input-project"><i class="fa fa-bookmark"></i> <span data-i18n="autanaCloud.label.project"></span></label>
         <input class="input-append-left" type="text" id="node-config-input-project" style="width: 40%;" >
     </div>
     <div class="form-row">
-        <label for="node-config-input-apikey"><i class="fa fa-bookmark"></i> <span data-i18n="appwrite.label.apikey"></span></label>
+        <label for="node-config-input-apikey"><i class="fa fa-bookmark"></i> <span data-i18n="autanaCloud.label.apikey"></span></label>
         <input class="input-append-left" type="text" id="node-config-input-apikey" style="width: 40%;" >
     </div>
     <div class="form-tips">
-        <span data-i18n="[html]appwrite.tip.config1"></span>
+        <span data-i18n="[html]autanaCloud.tip.config1"></span>
     </div>
 </script>
 
@@ -798,10 +798,9 @@
     RED.nodes.registerType('appwrite-config',{
         category: 'config',
         defaults: { 
-            appwriteConfig: {type:"appwrite-config", required:true},
-            endpoint: {type: "text", required: true},
-            project: {type: "text", required: true},
-            apikey: {type: "text", required: true},
+            endpoint: {type: "text", required:true},
+            project: {type: "text", required:true},
+            apikey: {type: "text", required:true},
         },
         
         label: function() {

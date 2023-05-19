@@ -17,7 +17,11 @@
             "indexName": "Index name",
             "indexType": "Type",
             "indexColumns": "Columns",
-            "indexOrders": "Sorting"
+            "indexOrders": "Sorting",
+            "endpoint": "API Endpoint",
+            "project": "Project ID",
+            "apikey": "API Key",
+            "config": "Client configuration"
         },
         "placeholder": {
             "tableName": "Table name",
@@ -34,7 +38,7 @@
             "indexOrders": "ASC, DESC, ASC"
         },
         "tip": {
-            "config1": "<p>To obtain these fields, go to your AutanaCloud account and open your project settings. </p>"
+            "config1": "<p>To obtain these fields, go to your appwrite server and open your project settings. </p>"
         },
         "warn": {
             "missing-config": "Missing AutanaCloud configuration",

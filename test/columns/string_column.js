@@ -10,7 +10,7 @@ helper.init(require.resolve("node-red"));
 function sut() {
     return {
         id: common.sutNodeId,
-        type: "add String Column",
+        type: "com.autana.StringColumn",
         appwriteConfig: common.appwriteConfigNodeId,
         tableName: table,
         databaseName: database,
@@ -35,7 +35,7 @@ describe("testing create-string-column node", function () {
 
     common.configureTestSuite(this, helper);
 
-    it("add string column test", function (done) {
+    it("com.autana.StringColumn test", function (done) {
         this.timeout(5000);
         helper.load(
             autanaDataTablesNode,

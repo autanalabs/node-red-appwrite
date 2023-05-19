@@ -108,7 +108,7 @@ function addAgeColumnNode(nodeId, database, table, nextNode) {
 function addIntegerColumnNode(nodeId, database, table, name, nextNode) {
     return {
         id: nodeId,
-        type: "add Integer Column",
+        type: "com.autana.IntegerColumn",
         appwriteConfig: appwriteConfigNodeId,
         databaseName: database,
         tableName: table,

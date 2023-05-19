@@ -10,7 +10,7 @@ helper.init(require.resolve("node-red"));
 function sut() {
     return {
         id: common.sutNodeId,
-        type: "add Boolean Column",
+        type: "com.autana.BooleanColumn",
         appwriteConfig: common.appwriteConfigNodeId,
         tableName: table,
         databaseName: database,
@@ -34,7 +34,7 @@ describe("testing create-boolean-column node", function () {
 
     common.configureTestSuite(this, helper);
 
-    it("add boolean column test", function (done) {
+    it("com.autana.BooleanColumn test", function (done) {
         this.timeout(5000);
         helper.load(
             autanaDataTablesNode,

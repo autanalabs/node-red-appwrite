@@ -10,7 +10,7 @@ helper.init(require.resolve("node-red"));
 function sut() {
     return {
         id: common.sutNodeId,
-        type: "add Integer Column",
+        type: "com.autana.IntegerColumn",
         appwriteConfig: common.appwriteConfigNodeId,
         tableName: table,
         databaseName: database,
@@ -36,7 +36,7 @@ describe("testing create-integer-column node", function () {
 
     common.configureTestSuite(this, helper);
 
-    it("add integer column test", function (done) {
+    it("com.autana.IntegerColumn test", function (done) {
         this.timeout(5000);
         helper.load(
             autanaDataTablesNode,

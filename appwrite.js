@@ -639,23 +639,23 @@ module.exports = function(RED) {
     const columns = require('./lib/columns');
     const indexes = require('./lib/indexes');
 
-    RED.nodes.registerType("add String Column", function (n) {
+    RED.nodes.registerType("com.autana.StringColumn", function (n) {
         columns.StringColumn.createNode(RED, this, n);
     });
 
-    RED.nodes.registerType("add Integer Column", function (n) {
+    RED.nodes.registerType("com.autana.IntegerColumn", function (n) {
         columns.IntegerColumn.createNode(RED, this, n);
     });
 
-    RED.nodes.registerType("add Float Column", function (n) {
+    RED.nodes.registerType("com.autana.FloatColumn", function (n) {
         columns.FloatColumn.createNode(RED, this, n);
     });
 
-    RED.nodes.registerType("add Boolean Column", function (n) {
+    RED.nodes.registerType("com.autana.BooleanColumn", function (n) {
         columns.BooleanColumn.createNode(RED, this, n);
     });
 
-    RED.nodes.registerType("delete Column", function (n) {
+    RED.nodes.registerType("com.autana.deleteColumn", function (n) {
         columns.DeleteColumn.createNode(RED, this, n);
     });
 

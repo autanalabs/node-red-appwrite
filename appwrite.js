@@ -51,12 +51,6 @@ module.exports = function(RED) {
             .setProject(appwriteConfig.params.project)
             .setKey(appwriteConfig.params.apiKey);
 
-        /*
-         client
-            .setEndpoint("https://cloud.appwrite.io/v1")
-            .setProject("autana")
-            .setKey("9e49d48d5914598f3d9ade48d058ee1af3e04655793bcab0dca7f0bb5ca0b707b6346d6d9ef5ec2a09de2275c95af95b908a2af3c4d3d3bf508b59ae505c6b3cd45fb5a58f5b43f243fcefded0716269da00d6ca4a6e5400fc926afc8916f4223d55ffbe8842ca3045cd4188dea301ba6c5ba88760e2e5731c274167d28e25b1");
-        */
         let database = new sdk.Databases(client);
         return database;
     }
@@ -65,7 +59,7 @@ module.exports = function(RED) {
         console.log('creating AutanaDataTableReadNode...')
         try {
             RED.nodes.createNode(this, n);
-            let databaseName = n.databaseName;
+            let nodeDatabaseName = n.databaseName;
             let nodeTableName = n.tableName;
             let nodeQuery = n.query;
             let node = this;
@@ -74,25 +68,14 @@ module.exports = function(RED) {
             node.on("input", function(msg) {
                 console.log('AutanaDataTableReadNode.onMessage()');
     
-                let tableName = nodeTableName || msg.tableName;
-                let query = nodeQuery || msg.query;
+                let tableName = msg.tableName || nodeTableName;
+                let query = msg.query || nodeQuery;
+                let databaseName = msg.databaseName || nodeDatabaseName;
     
-                if (msg.tableName && nodeTableName 
-                    && (nodeTableName !== msg.tableName)) {  
-                    node.warn(RED._("autanaCloud.error.table-name-overrided"));
-                    console.warn(RED._("autanaCloud.error.table-name-overrided"));
-                    return;
-                }
-    
-                if (msg.query && nodeQuery 
-                    && (nodeQuery !== msg.query)) {  
-                    node.warn(RED._("autanaCloud.error.query-overrided"));
-                    console.warn(RED._("autanaCloud.error.query-overrided"));
-                    return;
-                }
     
                 node.status({fill:"blue",shape:"dot",text:"autanaCloud.status.reading"});
-                let promise = database.listDocuments(databaseName, tableName, isEmpty(query)? null :[query]);
+                let promise = database.listDocuments(databaseName, tableName, 
+                    isEmpty(query)? null : Array.isArray(query)? query: [query]);
                 promise.then(function (response) {
                     msg.payload = response;
                     msg.payload.documents
@@ -125,7 +108,7 @@ module.exports = function(RED) {
         console.log('creating AutanaDataTableInsertNode...')
         try {
             RED.nodes.createNode(this, n);
-            let databaseName = n.databaseName;
+            let nodeDatabaseName = n.databaseName;
             let nodeTableName = n.tableName;
             let nodeDocId = n.docId;
             let node = this;
@@ -134,8 +117,9 @@ module.exports = function(RED) {
             node.on("input", function(msg) {
                 console.log('AutanaDataTableInsertNode.onMessage()');
     
-                let tableName = nodeTableName || msg.tableName;
-                let docId = nodeDocId || msg.docId;
+                let tableName = msg.tableName || nodeTableName;
+                let docId = msg.docId || nodeDocId;
+                let databaseName = msg.databaseName || nodeDatabaseName;
     
                 if (msg.tableName && nodeTableName 
                     && (nodeTableName !== msg.tableName)) {  
@@ -181,7 +165,7 @@ module.exports = function(RED) {
         console.log('creating AutanaDataTableUpdateNode...')
         try {
             RED.nodes.createNode(this, n);
-            let databaseName = n.databaseName;
+            let nodeDatabaseName = n.databaseName;
             let nodeTableName = n.tableName;
             let nodeDocId = n.docId;
             let node = this;
@@ -190,8 +174,9 @@ module.exports = function(RED) {
             node.on("input", function(msg) {
                 console.log('AutanaDataTableUpdateNode.onMessage()');
     
-                let tableName = nodeTableName || msg.tableName;
-                let docId = nodeDocId || msg.docId;
+                let tableName = msg.tableName || nodeTableName;
+                let docId = msg.docId || nodeDocId;
+                let databaseName = msg.databaseName || nodeDatabaseName;
     
                 if (msg.tableName && nodeTableName 
                     && (nodeTableName !== msg.tableName)) {  
@@ -243,7 +228,7 @@ module.exports = function(RED) {
         console.log('creating AutanaDataTableDeleteNode...')
         try {
             RED.nodes.createNode(this, n);
-            let databaseName = n.databaseName;
+            let nodeDatabaseName = n.databaseName;
             let nodeTableName = n.tableName;
             let nodeDocId = n.docId;
             let node = this;
@@ -252,8 +237,9 @@ module.exports = function(RED) {
             node.on("input", function(msg) {
                 console.log('AutanaDataTableDeleteNode.onMessage()');
     
-                let tableName = nodeTableName || msg.tableName;
-                let docId = nodeDocId || msg.docId;
+                let tableName = msg.tableName || nodeTableName;
+                let docId = msg.docId || nodeDocId;
+                let databaseName = msg.databaseName || nodeDatabaseName;
     
                 if (msg.tableName && nodeTableName 
                     && (nodeTableName !== msg.tableName)) {  
@@ -305,7 +291,7 @@ module.exports = function(RED) {
         console.log('creating AutanaDataTableReadSchemaNode...')
         try {
             RED.nodes.createNode(this, n);
-            let databaseName = n.databaseName;
+            let nodeDatabaseName = n.databaseName;
             let nodeTableName = n.tableName;
             let node = this;
             let database = getDatabase(n);
@@ -313,7 +299,8 @@ module.exports = function(RED) {
             node.on("input", function(msg) {
                 console.log('AutanaDataTableReadSchemaNode.onMessage()');
     
-                let tableName = nodeTableName || msg.tableName;
+                let tableName = msg.tableName || nodeTableName;
+                let databaseName = msg.databaseName || nodeDatabaseName;
     
                 if (msg.tableName && nodeTableName 
                     && (nodeTableName !== msg.tableName)) {  
@@ -365,7 +352,7 @@ module.exports = function(RED) {
         console.log('creating AutanaDataTableListTablesNode...')
         try {
             RED.nodes.createNode(this, n);
-            let databaseName = n.databaseName;
+            let nodeDatabaseName = n.databaseName;
             let nodeTableName = n.tableName;
             let node = this;
             let database = getDatabase(n);
@@ -373,7 +360,8 @@ module.exports = function(RED) {
             node.on("input", function(msg) {
                 console.log('AutanaDataTableListTablesNode.onMessage()');
     
-                let tableName = nodeTableName || msg.tableName;
+                let tableName = msg.tableName || nodeTableName;
+                let databaseName = msg.databaseName || nodeDatabaseName;
     
                 if (msg.tableName && nodeTableName 
                     && (nodeTableName !== msg.tableName)) {  
@@ -430,7 +418,7 @@ module.exports = function(RED) {
         console.log('creating AutanaDataTableCreateTableNode...')
         try {
             RED.nodes.createNode(this, n);
-            let databaseName = n.databaseName;
+            let nodeDatabaseName = n.databaseName;
             let nodeTableName = n.tableName;
             let nodeSkipExists = n.skipExists;
             let node = this;
@@ -439,7 +427,8 @@ module.exports = function(RED) {
             node.on("input", function(msg) {
                 console.log('AutanaDataTableCreateTable.onMessage()');
     
-                let tableName = nodeTableName || msg.tableName;
+                let tableName = msg.tableName || nodeTableName;
+                let databaseName = msg.databaseName || nodeDatabaseName;
     
                 if (msg.tableName && nodeTableName 
                     && (nodeTableName !== msg.tableName)) {  
@@ -519,7 +508,7 @@ module.exports = function(RED) {
         console.log('creating AutanaDataTableDeleteTableNode...')
         try {
             RED.nodes.createNode(this, n);
-            let databaseName = n.databaseName;
+            let nodeDatabaseName = n.databaseName;
             let nodeTableName = n.tableName;
             let nodeSkipNotFound = n.skipNotFound;
             let node = this;
@@ -528,7 +517,8 @@ module.exports = function(RED) {
             node.on("input", function(msg) {
                 console.log('AutanaDataTableDeleteTable.onMessage()');
     
-                let tableName = nodeTableName || msg.tableName;
+                let tableName = msg.tableName || nodeTableName;
+                let databaseName = msg.databaseName || nodeDatabaseName;
     
                 if (msg.tableName && nodeTableName 
                     && (nodeTableName !== msg.tableName)) {  

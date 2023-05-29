@@ -17,54 +17,7 @@
 module.exports = function (RED) {
     "use strict";
     var sdk = require('node-appwrite');
-
-    function isEmpty(str) {
-        return (!str || str.length === 0);
-    }
-
-    function getDatabase(n, msg) {
-
-        var appwriteConfig;
-
-        if (msg.endpoint && msg.projectId && msg.apiKey) {
-
-            appwriteConfig = {
-                params: {
-                    endpoint: msg.endpoint,
-                    projectId: msg.projectId,
-                    apiKey: msg.apiKey
-                }
-            };
-
-
-        } else {
-            if (n.appwriteConfig) {
-                appwriteConfig = RED.nodes.getNode(n.appwriteConfig);
-            }
-        }
-
-        if (!appwriteConfig) {
-            node.warn(RED._("appwrite.warn.missing-config"));
-            console.warn(RED._("appwrite.warn.missing-config"));
-            return;
-        }
-
-        var sdk = require('node-appwrite');
-        if (!sdk) {
-            throw new Error(RED._("autanaCloud.warn.wrong-config"));
-        }
-        var client = new sdk.Client();
-        if (!client) {
-            throw new Error(RED._("autanaCloud.warn.missing-client"));
-        }
-        client
-            .setEndpoint(appwriteConfig.params.endpoint)
-            .setProject(appwriteConfig.params.project)
-            .setKey(appwriteConfig.params.apiKey);
-
-        let database = new sdk.Databases(client);
-        return database;
-    }
+    const { isEmpty, getDatabase } = require('./lib/utils');
 
     function AutanaDataTableReadNode(n) {
         console.log('creating AutanaDataTableReadNode...')
@@ -76,13 +29,12 @@ module.exports = function (RED) {
             let node = this;
 
             node.on("input", function (msg) {
-                let database = getDatabase(n, msg);
+                let database = getDatabase(RED, n, msg);
                 console.log('AutanaDataTableReadNode.onMessage()');
 
                 let tableName = msg.tableName || nodeTableName;
                 let query = msg.query || nodeQuery;
                 let databaseName = msg.databaseName || nodeDatabaseName;
-
 
                 node.status({ fill: "blue", shape: "dot", text: "autanaCloud.status.reading" });
                 let promise = database.listDocuments(databaseName, tableName,
@@ -125,7 +77,7 @@ module.exports = function (RED) {
             let node = this;
 
             node.on("input", function (msg) {
-                let database = getDatabase(n, msg);
+                let database = getDatabase(RED, n, msg);
                 console.log('AutanaDataTableInsertNode.onMessage()');
 
                 let tableName = msg.tableName || nodeTableName;
@@ -182,7 +134,7 @@ module.exports = function (RED) {
             let node = this;
 
             node.on("input", function (msg) {
-                let database = getDatabase(n, msg);
+                let database = getDatabase(RED, n, msg);
                 console.log('AutanaDataTableUpdateNode.onMessage()');
 
                 let tableName = msg.tableName || nodeTableName;
@@ -245,7 +197,7 @@ module.exports = function (RED) {
             let node = this;
 
             node.on("input", function (msg) {
-                let database = getDatabase(n, msg);
+                let database = getDatabase(RED, n, msg);
                 console.log('AutanaDataTableDeleteNode.onMessage()');
 
                 let tableName = msg.tableName || nodeTableName;
@@ -307,7 +259,7 @@ module.exports = function (RED) {
             let node = this;
 
             node.on("input", function (msg) {
-                let database = getDatabase(n, msg);
+                let database = getDatabase(RED, n, msg);
                 console.log('AutanaDataTableReadSchemaNode.onMessage()');
 
                 let tableName = msg.tableName || nodeTableName;
@@ -368,7 +320,7 @@ module.exports = function (RED) {
             let node = this;
 
             node.on("input", function (msg) {
-                let database = getDatabase(n, msg);
+                let database = getDatabase(RED, n, msg);
                 console.log('AutanaDataTableListTablesNode.onMessage()');
 
                 let tableName = msg.tableName || nodeTableName;
@@ -435,7 +387,7 @@ module.exports = function (RED) {
             let node = this;
 
             node.on("input", function (msg) {
-                let database = getDatabase(n, msg);
+                let database = getDatabase(RED, n, msg);
                 console.log('AutanaDataTableCreateTable.onMessage()');
 
                 let tableName = msg.tableName || nodeTableName;
@@ -525,7 +477,7 @@ module.exports = function (RED) {
             let node = this;
 
             node.on("input", function (msg) {
-                let database = getDatabase(n, msg);
+                let database = getDatabase(RED, n, msg);
                 console.log('AutanaDataTableDeleteTable.onMessage()');
 
                 let tableName = msg.tableName || nodeTableName;

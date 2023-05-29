@@ -17,11 +17,11 @@ const helperFunctionNodeId2 = "helper-function-node-2";
 
 helper.init(require.resolve("node-red"));
 
-function sut() {
+function sut(appwriteConfigNodeId = common.appwriteConfigNodeId) {
     return {
         id: common.sutNodeId,
         type: "com.autana.readTable",
-        appwriteConfig: common.appwriteConfigNodeId,
+        appwriteConfig: appwriteConfigNodeId,
         databaseName: database,
         tableName: table,
         query: null,
@@ -43,11 +43,20 @@ var testFlow = [
     sut()
 ];
 
-describe("testing update document node", function () {
+var testFlowWithoutAppwriteConfig = [
+    common.helperInitNode([common.helperMessageSetupNodeId]),
+    common.helperMessageSetupNode([common.sutNodeId]),
+    common.helperDebugNode([common.helperAsserterNodeId]),
+    common.helperAssertNode([common.helperNodeId]),
+    common.helperNode(), 
+    sut(null)
+];
+
+describe("testing read document node", function () {
 
     common.configureTestSuite(this, helper);
 
-    it("update document test", function (done) {
+    it("read document using appwriteConfig node test", function (done) {
         this.timeout(5000);
         helper.load(
             autanaDataTablesNode,
@@ -94,6 +103,52 @@ describe("testing update document node", function () {
                         age: age2
                     };
                     helperFunctionNode2.send(msg);
+                });
+
+                common.performAsserts(helper, async function(msg) {
+                    should(msg).not.be.null();
+                    should(msg.payload).not.be.null();
+                    should(msg.payload.total).be.greaterThanOrEqual(2);
+                    should(msg.payload.documents).not.be.empty();
+                    
+                    firstDoc = msg.payload.documents.filter(d => d.$id == docId1);
+                    should(firstDoc).not.be.empty();
+                    should(firstDoc[0].$id).be.equals(docId1);
+                    should(firstDoc[0].age).be.equals(age1);
+                    
+                    secondDoc = msg.payload.documents.filter(d => d.$id == docId2);
+                    should(secondDoc).not.be.empty();
+                    should(secondDoc[0].$id).be.equals(docId2);
+                    should(secondDoc[0].age).be.equals(age2);
+                   
+                });
+                
+                initNode.receive({});
+            }
+        );
+    });
+
+    it("read document using msg config test", function (done) {
+        this.timeout(5000);
+        helper.load(
+            autanaDataTablesNode,
+            testFlowWithoutAppwriteConfig,
+            null,
+            function () {
+                var [initNode, helperNode, sutNode] = common.getAndAssertMainNodes(done, helper);
+                var helperMessageSetupNode = common.getAndAssertNodesById(helper, common.helperMessageSetupNodeId);
+                var helperAsserterNode = common.getAndAssertNodesById(helper, common.helperAsserterNodeId);
+
+                common.configureOnCallErrorCallback(done, [
+                    initNode, helperNode, sutNode, 
+                    helperAsserterNode, helperMessageSetupNode
+                ]);
+
+                common.onMessageSetup(helper, async function(msg) {
+                    msg.endpoint = process.env.TEST_APPWRITE_ENDPOINT;
+                    msg.project = process.env.TEST_APPWRITE_PROJECT_ID;
+                    msg.apiKey = process.env.TEST_APPWRITE_APIKEY;
+                    return msg;
                 });
 
                 common.performAsserts(helper, async function(msg) {
